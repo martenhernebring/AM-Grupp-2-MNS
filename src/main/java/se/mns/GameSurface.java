@@ -29,6 +29,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private Timer timer;
     private List<Rectangle> aliens;
     private Rectangle spaceShip;
+    private Point highscore;
 
     public GameSurface(final int width, final int height) {
         this.gameOver = false;
@@ -42,6 +43,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
         this.timer = new Timer(200, this);
         this.timer.start();
+        highscore = new Point();
     }
 
     @Override
@@ -70,7 +72,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             g.fillRect(0, 0, d.width, d.height);
             g.setColor(Color.black);
             g.setFont(new Font("Arial", Font.BOLD, 48));
-            g.drawString("Game over!", 20, d.width / 2 - 24);
+            g.drawString(Integer.toString(highscore.getLatestPoints()), 
+                    20, d.width / 2 - 24);
             return;
         }
 
@@ -109,6 +112,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 // we add to another list and remove later
                 // to avoid concurrent modification in a for-each loop
                 toRemove.add(alien);
+                highscore.pointIncrease();
             }
 
             if (alien.intersects(spaceShip)) {
@@ -134,17 +138,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // do nothing
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // do nothing
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        // this event triggers when we press a key and then
+     // this event triggers when we press a key and then
         // we will move the space ship up if the game is not over yet
 
         if (gameOver) {
@@ -157,5 +151,15 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         if (kc == KeyEvent.VK_SPACE && spaceShip.y > minHeight) {
             spaceShip.translate(0, -10);
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // do nothing
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // do nothing
     }
 }
