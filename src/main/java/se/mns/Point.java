@@ -18,6 +18,10 @@ public class Point {
 		this.latestPoint++;
 	}
 	
+	public void resetPoints() {
+		this.latestPoint = 0;
+	}
+	
 	public void setHighestPoint() {
 		if(this.latestPoint > this.highestPoint) {
 			this.highestPoint = this.latestPoint;
