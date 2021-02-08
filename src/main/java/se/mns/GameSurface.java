@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -26,22 +27,32 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private static final long serialVersionUID = 6260582674762246325L;
 
     private boolean gameOver;
+    private boolean restart;
     private Timer timer;
     private List<Rectangle> aliens;
     private Rectangle spaceShip;
+    private Point highscore;
+    private int width;
+    private int height;
 
     public GameSurface(final int width, final int height) {
-        this.gameOver = false;
-        this.aliens = new ArrayList<>();
+        this.width = width;
+        this.height = height;
+        highscore = new Point();
+        reset();
+    }
 
+    private void reset() {
+        this.gameOver = false;
+        this.restart = false;
+        this.aliens = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
             addAlien(width, height);
         }
-
-        this.spaceShip = new Rectangle(20, width / 2 - 15, 30, 20);
-
+        this.spaceShip = new Rectangle(20, 20, 30, 20);
         this.timer = new Timer(200, this);
         this.timer.start();
+        highscore.resetPoints();
     }
 
     @Override
@@ -66,11 +77,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         final Dimension d = this.getSize();
 
         if (gameOver) {
-            g.setColor(Color.red);
-            g.fillRect(0, 0, d.width, d.height);
-            g.setColor(Color.black);
-            g.setFont(new Font("Arial", Font.BOLD, 48));
-            g.drawString("Game over!", 20, d.width / 2 - 24);
+            showMenu(g, d);
             return;
         }
 
@@ -89,6 +96,24 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.fillRect(spaceShip.x, spaceShip.y, spaceShip.width, spaceShip.height);
     }
 
+    private void showMenu(Graphics g, Dimension d) {
+        g.setColor(Color.red);
+        g.fillRect(0, 0, d.width, d.height);
+        g.setColor(Color.black);
+        g.setFont(new Font("Arial", Font.BOLD, 48));
+        String score = "Score: " + Integer.toString(highscore.getLatestPoints());
+        g.drawString(score, 20, d.width / 2 - 24);
+    }
+
+    private void waitHalfSecond() {
+        try { // wait 0.5 s after game over
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         // this will trigger on the timer event
@@ -97,7 +122,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // and check for collision with the space ship
 
         if (gameOver) {
-            timer.stop();
             return;
         }
 
@@ -109,6 +133,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 // we add to another list and remove later
                 // to avoid concurrent modification in a for-each loop
                 toRemove.add(alien);
+                highscore.pointIncrease();
             }
 
             if (alien.intersects(spaceShip)) {
@@ -148,7 +173,12 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // we will move the space ship up if the game is not over yet
 
         if (gameOver) {
-            return;
+            if (restart) {
+                reset();
+                return;
+            }
+            waitHalfSecond();
+            restart = true;
         }
 
         final int minHeight = 10;
