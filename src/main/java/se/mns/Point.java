@@ -14,6 +14,10 @@ public class Point {
 		return this.latestPoint;
 	}
 	
+	public int getHighestPoints() {
+		return this.highestPoint;
+	}
+	
 	public void pointIncrease() {
 		this.latestPoint++;
 	}
