@@ -1,3 +1,28 @@
+/*
+ * Copyright (c) 1995, 2017, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+ * or visit www.oracle.com if you need additional information or have any
+ * questions.
+ */
+
 package se.mns;
 
 import java.awt.geom.Rectangle2D;
@@ -167,7 +192,7 @@ public class Bird extends Rectangle2D
      *           to a newly constructed {@code Rectangle}
      * @since 1.1
      */
-    public Rectangle(Rectangle r) {
+    public Bird(Rectangle r) {
         this(r.x, r.y, r.width, r.height);
     }
 
@@ -182,7 +207,7 @@ public class Bird extends Rectangle2D
      * @param     height   the height of the {@code Rectangle}
      * @since 1.0
      */
-    public Rectangle(int x, int y, int width, int height) {
+    public  Bird(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -196,7 +221,7 @@ public class Bird extends Rectangle2D
      * @param width the width of the {@code Rectangle}
      * @param height the height of the {@code Rectangle}
      */
-    public Rectangle(int width, int height) {
+    public  Bird(int width, int height) {
         this(0, 0, width, height);
     }
 
@@ -210,7 +235,7 @@ public class Bird extends Rectangle2D
      * @param d a {@code Dimension}, representing the
      * width and height of the {@code Rectangle}
      */
-    public Rectangle(Point p, Dimension d) {
+    public  Bird(Point p, Dimension d) {
         this(p.x, p.y, d.width, d.height);
     }
 
@@ -220,7 +245,7 @@ public class Bird extends Rectangle2D
      * @param p a {@code Point} that is the top left corner
      * of the {@code Rectangle}
      */
-    public Rectangle(Point p) {
+    public  Bird(Point p) {
         this(p.x, p.y, 0, 0);
     }
 
@@ -230,7 +255,7 @@ public class Bird extends Rectangle2D
      * by the {@code Dimension} argument.
      * @param d a {@code Dimension}, specifying width and height
      */
-    public Rectangle(Dimension d) {
+    public  Bird(Dimension d) {
         this(0, 0, d.width, d.height);
     }
 
