@@ -6,36 +6,36 @@ import org.junit.jupiter.api.Test;
 
 class PointTest {
 
-	Point point = new Point();
+	Score point = new Score();
 	
 	@Test
 	public void testConstructor() {
-		assertEquals(0, point.getLatestPoints());
+		assertEquals(0, point.getLatest());
 	}
 	
 	@Test
 	public void testGetLatestPoints() {
-		assertEquals(0, point.getLatestPoints());
+		assertEquals(0, point.getLatest());
 	}
 	
 	@Test
 	public void testPointIncrease() {
-		point.pointIncrease();
-		assertEquals(1, point.getLatestPoints());
+		point.increase();
+		assertEquals(1, point.getLatest());
 	}
 	
 	@Test
 	public void testResetPoints() {
-		point.pointIncrease();
-		point.resetPoints();
-		assertEquals(0, point.getLatestPoints());
+		point.increase();
+		point.reset();
+		assertEquals(0, point.getLatest());
 	}
 
 	@Test
 	public void testSetHigestPoint() {
-		point.pointIncrease();
-		point.setHighestPoint();
-		assertEquals(1, point.getHighestPoints());
+		point.increase();
+		point.setHighest();
+		assertEquals(1, point.getHighest());
 	}
 
 	
