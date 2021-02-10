@@ -1,9 +1,9 @@
 import java.awt.Color;
 
 import javax.swing.*;
-public class Grafic extends Bird{
+public class Bird extends Rectangle{
 
-    public void paintShape(Grafics g) {
+    public void paintShape(Graphics g) {
         super.paintShape(g);
         this.setBackgrond(Color.DARK_GRAY);
 
