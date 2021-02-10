@@ -30,14 +30,15 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private Timer timer;
     private List<Rectangle> aliens;
     private Rectangle spaceShip;
-    private Score highscore;
+    private Score score;
+
     private int width;
     private int height;
 
     public GameSurface(final int width, final int height) {
         this.width = width;
         this.height = height;
-        highscore = new Score();
+        score = new Score();
         reset();
     }
 
@@ -52,7 +53,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         this.spaceShip = new Rectangle(20, 20, 30, 20);
         this.timer = new Timer(200, this);
         this.timer.start();
-        highscore.reset();
+        score.reset();
     }
 
     @Override
@@ -101,8 +102,14 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.fillRect(0, 0, d.width, d.height);
         g.setColor(Color.black);
         g.setFont(new Font("Arial", Font.BOLD, 48));
-        String score = "Score: " + Integer.toString(highscore.getLatest());
-        g.drawString(score, 20, d.width / 2 - 24);
+
+        String latestScore = "Score: " + Integer.toString(score.getLatest());
+        
+        score.setHighest();
+        String highestScore = "HighestScore: " + Integer.toString(score.getHighest());
+        
+        g.drawString(latestScore, 20, d.width / 2 - 24);
+        g.drawString(highestScore, 20, d.width / 2 - 24);
     }
 
     private void waitHalfSecond() {
@@ -133,7 +140,9 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 // we add to another list and remove later
                 // to avoid concurrent modification in a for-each loop
                 toRemove.add(alien);
-                highscore.increase();
+
+                score.increase();
+
             }
 
             if (alien.intersects(spaceShip)) {
