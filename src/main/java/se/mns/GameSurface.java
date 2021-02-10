@@ -101,15 +101,16 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.red);
         g.fillRect(0, 0, d.width, d.height);
         g.setColor(Color.black);
-        g.setFont(new Font("Arial", Font.BOLD, 48));
+        g.setFont(new Font("Arial", Font.BOLD, 32));
 
-        String latestScore = "Score: " + Integer.toString(score.getLatest());
+        String latestScore = "Latest Score: " + Integer.toString(score.getLatest());
         
         score.setHighest();
-        String highestScore = "HighestScore: " + Integer.toString(score.getHighest());
+        
+        String highestScore = "Highest Score: " + Integer.toString(score.getHighest());
         
         g.drawString(latestScore, 20, d.width / 2 - 24);
-        g.drawString(highestScore, 20, d.width / 2 - 24);
+        g.drawString(highestScore, 20, d.width / 2 + 24);
     }
 
     private void waitHalfSecond() {
