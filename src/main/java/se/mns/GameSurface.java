@@ -162,6 +162,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         final int maxHeight = this.getSize().height - spaceShip.height - 10;
         if (spaceShip.y < maxHeight) {
             spaceShip.translate(0, 20);
+        } else {
+        	gameOver = true;
         }
 
         this.repaint();
@@ -194,8 +196,12 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         final int minHeight = 10;
         final int kc = e.getKeyCode();
 
-        if (kc == KeyEvent.VK_SPACE && spaceShip.y > minHeight) {
-            spaceShip.translate(0, -10);
+        if (kc == KeyEvent.VK_SPACE) {
+        	if(spaceShip.y > minHeight) {
+        		spaceShip.translate(0, -10);
+        	} else {
+        		gameOver = true;
+        	}
         }
     }
 }
