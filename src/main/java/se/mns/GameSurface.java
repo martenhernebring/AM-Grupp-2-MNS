@@ -26,7 +26,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private static final long serialVersionUID = 6260582674762246325L;
 
     private boolean gameOver;
-    private boolean restart;
+    private boolean start;
     private Timer timer;
     private List<Rectangle> aliens;
     private Rectangle spaceShip;
@@ -44,7 +44,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     private void reset() {
         this.gameOver = false;
-        this.restart = false;
+        this.start = true;
         this.aliens = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
             addAlien(width, height);
@@ -113,15 +113,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.drawString(highestScore, 20, d.width / 2 + 24);
     }
 
-    private void waitHalfSecond() {
-        try { // wait 0.5 s after game over
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            System.err.println(e.getMessage());
-            Thread.currentThread().interrupt();
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         // this will trigger on the timer event
@@ -131,6 +122,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
         if (gameOver) {
             return;
+        } else if (start){
+            start = false;
         }
 
         final List<Rectangle> toRemove = new ArrayList<>();
@@ -184,13 +177,9 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // this event triggers when we press a key and then
         // we will move the space ship up if the game is not over yet
 
-        if (gameOver) {
-            if (restart) {
-                reset();
-                return;
-            }
-            waitHalfSecond();
-            restart = true;
+        if (gameOver && !start) {
+            reset();
+            return;
         }
 
         final int minHeight = 10;
