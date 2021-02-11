@@ -35,3 +35,7 @@ target/
 #VSCode
 .vscode/
 bin/
+
+#mac 
+*.DS_Store
+
