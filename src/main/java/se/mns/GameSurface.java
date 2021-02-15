@@ -54,7 +54,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         }
 
         this.spaceShip = new Rectangle(20, 20, 30, 20);
-        this.timer = new Timer(200, this);
+        this.timer = new Timer(50, this);
         this.timer.start();
         score.reset();
     }
@@ -125,45 +125,46 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
         if (gameOver) {
             return;
-        } else if (start){
-            start = false;
-        }
 
-        final List<Rectangle> toRemove = new ArrayList<>();
+        } else if (!start) {
+            final List<Rectangle> toRemove = new ArrayList<>();
 
-        for (Rectangle alien : aliens) {
-            alien.translate(-1, 0);
-            if (alien.x + alien.width < 0) {
-                // we add to another list and remove later
-                // to avoid concurrent modification in a for-each loop
-                toRemove.add(alien);
+            for (Rectangle alien : aliens) {
+                alien.translate(-1, 0);
+                if (alien.x + alien.width < 0) {
+                    // we add to another list and remove later
+                    // to avoid concurrent modification in a for-each loop
+                    toRemove.add(alien);
 
-                score.increase();
+                    score.increase();
 
+                }
+
+                if (alien.intersects(spaceShip)) {
+                    gameOver = true;
+                }
             }
 
-            if (alien.intersects(spaceShip)) {
-                gameOver = true;
+            aliens.removeAll(toRemove);
+
+
+            // add new aliens for every one that was removed
+            for (int i = 0; i < toRemove.size(); ++i) {
+                Dimension d = getSize();
+                addAlien(d.width, d.height);
+
             }
-        }
-
-        aliens.removeAll(toRemove);
-
-        // add new aliens for every one that was removed
-        for (int i = 0; i < toRemove.size(); ++i) {
-            Dimension d = getSize();
-            addAlien(d.width, d.height);
-        }
-
-        if(spacePressed) {
-            final int minHeight = 10;
-            if (spaceShip.y > minHeight) {
-                spaceShip.translate(0, -10);
-            }
-        } else {
-            final int maxHeight = this.getSize().height - spaceShip.height - 10;
-            if (spaceShip.y < maxHeight) {
-                spaceShip.translate(0, 20);
+            final int spaceshipMovement = 2;
+            if(spacePressed) {
+                final int minHeight = spaceshipMovement;
+                if (spaceShip.y > minHeight) {
+                    spaceShip.translate(0, -spaceshipMovement);
+                }
+            } else {
+                final int maxHeight = this.getSize().height - spaceShip.height - spaceshipMovement;
+                if (spaceShip.y < maxHeight) {
+                    spaceShip.translate(0, 2*spaceshipMovement);
+                }
             }
 
         }
@@ -173,6 +174,9 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(!gameOver) {
+            start = false;
+        }
         spacePressed = false;
     }
 
