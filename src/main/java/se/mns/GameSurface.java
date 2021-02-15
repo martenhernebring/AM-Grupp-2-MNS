@@ -39,6 +39,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private int width;
     private int height;
 
+    private boolean changeDifficulty;
+    
     public GameSurface(final int width, final int height) {
         this.width = width;
         this.height = height;
@@ -47,6 +49,10 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void reset() {
+        //easy difficulty
+        easyMode = true;
+        changeDifficulty = false;
+        
         gameOver = false;
         start = true;
         aliens = new ArrayList<>();
@@ -58,10 +64,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         spaceShip = new Rectangle(20, 20, 30, 20);
         timer = new Timer(50, this);
         timer.start();
-
- 
         score.reset();
-        easyMode = true;
     }
 
     @Override
@@ -73,8 +76,14 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private void addAlien(final int width, final int height) {
         int x = ThreadLocalRandom.current().nextInt(width / 2, width - 30);
         int y = ThreadLocalRandom.current().nextInt(20, height - 30);
-        final int alienSize = 20; // Version one was set to 10
-        aliens.add(new Rectangle(x, y, alienSize, alienSize));
+        if(easyMode) {
+            final int easy = 20;
+            aliens.add(new Rectangle(x, y, easy, easy));
+        } else {
+            final int hard = 40;
+            aliens.add(new Rectangle(x, y, hard, hard));
+        }
+        
     }
 
     /**
@@ -179,6 +188,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             }
 
         }
+        
+        if(changeDifficulty) {
+            easyMode = !easyMode;
+            changeDifficulty = false;
+        }
 
         this.repaint();
     }
@@ -212,9 +226,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
             spacePressed = true;
         } else if(kc==KeyEvent.VK_D){
-        	easyMode = !easyMode;
-        	//Switch difficulty
-        	
+            changeDifficulty = true;
         }
-    } 
+    }
+
 }
