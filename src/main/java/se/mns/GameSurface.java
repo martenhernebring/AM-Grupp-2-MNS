@@ -29,6 +29,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private boolean start;
 
     private boolean spacePressed;
+    private boolean easyMode;
 
     private Timer timer;
     private List<Rectangle> aliens;
@@ -46,17 +47,18 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void reset() {
-        this.gameOver = false;
-        this.start = true;
-        this.aliens = new ArrayList<>();
+        gameOver = false;
+        start = true;
+        aliens = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
             addAlien(width, height);
         }
 
-        this.spaceShip = new Rectangle(20, 20, 30, 20);
-        this.timer = new Timer(50, this);
-        this.timer.start();
+        spaceShip = new Rectangle(20, 20, 30, 20);
+        timer = new Timer(50, this);
+        timer.start();
         score.reset();
+        easyMode = true;
     }
 
     @Override
@@ -136,7 +138,12 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                     // to avoid concurrent modification in a for-each loop
                     toRemove.add(alien);
 
-                    score.increase();
+                    if(easyMode) {
+                    	score.increase10Times();
+                    } else {
+                    	score.increase();
+                    }
+                    
 
                 }
 
@@ -200,6 +207,10 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         if (kc == KeyEvent.VK_SPACE) {
 
             spacePressed = true;
+        } else if(kc==KeyEvent.VK_D){
+        	easyMode = !easyMode;
+        	//Switch difficulty
+        	
         }
-    }
+    } 
 }

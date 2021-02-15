@@ -18,6 +18,10 @@ public class Score {
 		return this.highest;
 	}
 	
+	public void increase10Times() {
+		this.latest += 10;
+	}
+	
 	public void increase() {
 		this.latest++;
 	}
