@@ -39,3 +39,6 @@ bin/
 #mac 
 *.DS_Store
 
+#linux mac
+*.sh
+

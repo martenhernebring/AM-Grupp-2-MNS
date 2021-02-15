@@ -54,9 +54,12 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             addAlien(width, height);
         }
 
+
         spaceShip = new Rectangle(20, 20, 30, 20);
         timer = new Timer(50, this);
         timer.start();
+
+ 
         score.reset();
         easyMode = true;
     }
