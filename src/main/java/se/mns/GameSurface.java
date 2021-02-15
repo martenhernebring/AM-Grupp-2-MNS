@@ -26,7 +26,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private static final long serialVersionUID = 6260582674762246325L;
 
     private boolean gameOver;
-    private boolean restart;
+    private boolean start;
     private boolean spacePressed;
     
     private Timer timer;
@@ -46,14 +46,14 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     private void reset() {
         this.gameOver = false;
-        this.restart = false;
+        this.start = true;
         this.aliens = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
             addAlien(width, height);
         }
 
         this.spaceShip = new Rectangle(20, 20, 30, 20);
-        this.timer = new Timer(200, this);
+        this.timer = new Timer(50, this);
         this.timer.start();
         score.reset();
     }
@@ -115,15 +115,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.drawString(highestScore, 20, d.width / 2 + 24);
     }
 
-    private void waitHalfSecond() {
-        try { // wait 0.5 s after game over
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            System.err.println(e.getMessage());
-            Thread.currentThread().interrupt();
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         // this will trigger on the timer event
@@ -133,43 +124,43 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
         if (gameOver) {
             return;
-        }
+        } else if (!start) {
+            final List<Rectangle> toRemove = new ArrayList<>();
 
-        final List<Rectangle> toRemove = new ArrayList<>();
+            for (Rectangle alien : aliens) {
+                alien.translate(-1, 0);
+                if (alien.x + alien.width < 0) {
+                    // we add to another list and remove later
+                    // to avoid concurrent modification in a for-each loop
+                    toRemove.add(alien);
 
-        for (Rectangle alien : aliens) {
-            alien.translate(-1, 0);
-            if (alien.x + alien.width < 0) {
-                // we add to another list and remove later
-                // to avoid concurrent modification in a for-each loop
-                toRemove.add(alien);
+                    score.increase();
 
-                score.increase();
+                }
 
+                if (alien.intersects(spaceShip)) {
+                    gameOver = true;
+                }
             }
 
-            if (alien.intersects(spaceShip)) {
-                gameOver = true;
+            aliens.removeAll(toRemove);
+
+            // add new aliens for every one that was removed
+            for (int i = 0; i < toRemove.size(); ++i) {
+                Dimension d = getSize();
+                addAlien(d.width, d.height);
             }
-        }
-
-        aliens.removeAll(toRemove);
-
-        // add new aliens for every one that was removed
-        for (int i = 0; i < toRemove.size(); ++i) {
-            Dimension d = getSize();
-            addAlien(d.width, d.height);
-        }
-
-        if(spacePressed) {
-            final int minHeight = 10;
-            if (spaceShip.y > minHeight) {
-                spaceShip.translate(0, -10);
-            }
-        } else {
-            final int maxHeight = this.getSize().height - spaceShip.height - 10;
-            if (spaceShip.y < maxHeight) {
-                spaceShip.translate(0, 20);
+            final int spaceshipMovement = 2;
+            if(spacePressed) {
+                final int minHeight = spaceshipMovement;
+                if (spaceShip.y > minHeight) {
+                    spaceShip.translate(0, -spaceshipMovement);
+                }
+            } else {
+                final int maxHeight = this.getSize().height - spaceShip.height - spaceshipMovement;
+                if (spaceShip.y < maxHeight) {
+                    spaceShip.translate(0, 2*spaceshipMovement);
+                }
             }
         }
 
@@ -178,6 +169,9 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(!gameOver) {
+            start = false;
+        }
         spacePressed = false;
     }
 
@@ -191,13 +185,9 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // this event triggers when we press a key and then
         // we will move the space ship up if the game is not over yet
 
-        if (gameOver) {
-            if (restart) {
-                reset();
-                return;
-            }
-            waitHalfSecond();
-            restart = true;
+        if (gameOver && !start) {
+            reset();
+            return;
         }
 
         final int kc = e.getKeyCode();
