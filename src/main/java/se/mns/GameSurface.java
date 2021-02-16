@@ -159,11 +159,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                     // to avoid concurrent modification in a for-each loop
                     toRemove.add(alien);
 
-                    if(easyMode) {
-                    	score.increase10Times();
-                    } else {
-                    	score.increase();
-                    }
+                    score.increase();
                     
 
                 }
