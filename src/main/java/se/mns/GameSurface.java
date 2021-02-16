@@ -236,7 +236,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         } else if(kc==KeyEvent.VK_D){
             changeDifficulty = true;
         } else if(kc==KeyEvent.VK_S) { 
-        	speedUp = true;
+        	speedUp = !speedUp;
         }
     }
 
