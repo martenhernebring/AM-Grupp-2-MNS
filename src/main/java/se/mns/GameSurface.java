@@ -25,6 +25,7 @@ import javax.swing.Timer;
 public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private static final long serialVersionUID = 6260582674762246325L;
 
+    private boolean speedUp; 
     private boolean gameOver;
     private boolean start;
 
@@ -52,6 +53,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         //easy difficulty
         easyMode = true;
         changeDifficulty = false;
+        speedUp = false;
         
         gameOver = false;
         start = true;
@@ -145,7 +147,13 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             final List<Rectangle> toRemove = new ArrayList<>();
 
             for (Rectangle alien : aliens) {
-                alien.translate(-1, 0);
+            	
+            	if(speedUp) {  
+            		alien.translate(-5, 0);
+            	} else {
+            		alien.translate(-1, 0);
+            	}
+            	
                 if (alien.x + alien.width < 0) {
                     // we add to another list and remove later
                     // to avoid concurrent modification in a for-each loop
@@ -227,6 +235,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             spacePressed = true;
         } else if(kc==KeyEvent.VK_D){
             changeDifficulty = true;
+        } else if(kc==KeyEvent.VK_S) { 
+        	speedUp = true;
         }
     }
 
