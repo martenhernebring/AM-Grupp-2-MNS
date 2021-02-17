@@ -26,7 +26,7 @@ public class SimpleSurface extends JPanel implements ActionListener, KeyListener
 
     private Timer timer;
     private List<Rectangle> obstacles;
-    private Rectangle spaceShip;
+    private Rectangle bird;
 
     public SimpleSurface(final int width, final int height) {
 
@@ -35,7 +35,7 @@ public class SimpleSurface extends JPanel implements ActionListener, KeyListener
             addObstacles(width, height);
         }
 
-        spaceShip = new Rectangle(20, 20, 30, 20);
+        bird = new Rectangle(20, 20, 30, 20);
         timer = new Timer(50, this);
         timer.start();
     }
@@ -51,6 +51,7 @@ public class SimpleSurface extends JPanel implements ActionListener, KeyListener
         int y = ThreadLocalRandom.current().nextInt(50, height - 50);
         obstacles.add(new Rectangle(x, y, 25, 50));
     }
+    private int angle = 0;
 
     /**
      * Call this method when the graphics needs to be repainted on the graphics
@@ -60,20 +61,23 @@ public class SimpleSurface extends JPanel implements ActionListener, KeyListener
      */
     private void repaint(Graphics g) {
         final Dimension d = this.getSize();
-
+        
         // fill the background
         g.setColor(Color.cyan);
         g.fillRect(0, 0, d.width, d.height);
-
+        
+        
         // draw the obstacles
         for (Rectangle obstacle : obstacles) {
             g.setColor(Color.red);
             g.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
         }
-
-        // draw the space ship
+        
+        // draw the bird
         g.setColor(Color.black);
-        g.fillRect(spaceShip.x, spaceShip.y, spaceShip.width, spaceShip.height);
+        angle = (angle +1)% 46;
+        //g.fillRect(bird.x, bird.y, bird.width, bird.height);
+        g.fillArc(bird.x, bird.y, bird.width, bird.height, angle, 360-angle *2);
     }
 
     @Override
