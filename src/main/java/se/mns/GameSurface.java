@@ -42,6 +42,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private int height;
 
     private boolean changeDifficulty;
+
+    private boolean changeSpeed;
     
     public GameSurface(final int width, final int height) {
         this.width = width;
@@ -55,6 +57,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         //easy difficulty
         easyMode = true;
         changeDifficulty = false;
+        changeSpeed = false;
         speedUp = false;
         
         start = true;
@@ -204,6 +207,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             easyMode = !easyMode;
             changeDifficulty = false;
         }
+        
+        if(changeSpeed) {
+            speedUp = !speedUp;
+            changeSpeed = false;
+        }
 
         this.repaint();
     }
@@ -241,8 +249,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             spacePressed = true;
         } else if(kc==KeyEvent.VK_D){
             changeDifficulty = true;
-        } else if(kc==KeyEvent.VK_S) { 
-        	speedUp = !speedUp;
+        } else if(kc==KeyEvent.VK_S) {
+            changeSpeed = true;
         }
     }
 
