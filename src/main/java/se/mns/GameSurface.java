@@ -26,12 +26,14 @@ import javax.swing.Timer;
 public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private static final long serialVersionUID = 6260582674762246325L;
 
+    private boolean start; //easyMode = true, speedUp = false, change = false
+    private boolean gameOver; //easyMode = true, speedUp = false, change = false
     private boolean speedUp; 
-    private boolean gameOver;
-    private boolean start;
+    private boolean easyMode;
 
     private boolean spacePressed;
-    private boolean easyMode;
+    private boolean changeDifficulty;
+    private boolean changeSpeed;
 
     private Timer timer;
     private List<Rectangle> aliens;
@@ -40,10 +42,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     private int width;
     private int height;
-
-    private boolean changeDifficulty;
-
-    private boolean changeSpeed;
     
     public GameSurface(final int width, final int height) {
         this.width = width;
@@ -61,11 +59,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         speedUp = false;
         
         start = true;
+        
         aliens = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
             addAlien(width, height);
         }
-
 
         spaceShip = new Rectangle(20, 20, 30, 20);
         timer = new Timer(50, this);
