@@ -42,30 +42,17 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void reset() {
-
-        resetStatus();
+        status.reset();
+        score.reset();
 
         aliens = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
             addAlien();
         }
-
         spaceShip = new Rectangle(20, 20, 30, 20);
 
         timer = new Timer(50, this);
         timer.start();
-
-        score.reset();
-    }
-
-    private void resetStatus() {
-
-        status.setEasyMode(true);
-        status.setChangeDifficulty(false);
-        status.setChangeSpeed(false);
-        status.setSpeedUp(false);
-        status.setStart(true);
-
     }
 
     private void addAlien() {
@@ -115,16 +102,17 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void showMenu(Graphics g) {
+        // fill the background
         g.setColor(Color.red);
         g.fillRect(0, 0, SIZE, SIZE);
-        
+
+        score.update();
+        String latestScore = score.latest();
+        String highestScore = score.highest();
+
+        //choose font
         g.setColor(Color.black);
         g.setFont(new Font("Arial", Font.BOLD, 32));
-
-        String latestScore = "Latest Score: " + Integer.toString(score.getLatest());
-        score.setHighest();
-        String highestScore = "Highest Score: " + Integer.toString(score.getHighest());
-
         g.drawString(latestScore, 20, SIZE / 2 - 24);
         g.drawString(highestScore, 20, SIZE / 2 + 24);
 
@@ -145,14 +133,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             moveSpaceship();
         }
 
-        if (status.isChangeDifficulty()) {
-            status.setEasyMode(!status.isEasyMode());
-            status.setChangeDifficulty(false);
-        }
-        if (status.isChangeSpeed()) {
-            status.setSpeedUp(!status.isSpeedUp());
-            status.setChangeSpeed(false);
-        }
+        status.update();
 
         this.repaint();
     }
@@ -171,7 +152,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         for (Rectangle alien : aliens) {
 
             if (status.isSpeedUp()) {
-                alien.translate(-5, 0);
+                alien.translate(-3, 0);
             } else {
                 alien.translate(-1, 0);
             }
@@ -212,7 +193,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 status.setGameOver(true);
             }
         }
-
     }
 
     @Override
@@ -234,28 +214,14 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         // this event triggers when we press a key and then
         // we will move the space ship up if the game is not over yet
-
         if (status.isGameOver()) {
             if (!status.isStart()) {
                 reset();
             }
             return;
         }
-
         final int kc = e.getKeyCode();
-
-        switch (kc) {
-        case KeyEvent.VK_SPACE:
-            status.setSpacePressed(true);
-            break;
-        case KeyEvent.VK_D:
-            status.setChangeDifficulty(true);
-            break;
-        case KeyEvent.VK_S:
-            status.setChangeSpeed(true);
-            break;
-        }
-
+        status.keyPressed(kc);
     }
 
 }

@@ -6,33 +6,29 @@ public class Score {
 	private int highest;
 	
 	public Score() {
-		this.latest = 0;
-		this.highest = 0;
+		latest = 0;
+		highest = 0;
 	}
 	
-	public int getLatest() {
-		return this.latest;
+	public String latest() {
+		return "Latest Score: " + Integer.toString(latest);
 	}
 	
-	public int getHighest() {
-		return this.highest;
-	}
-	
-	public void increase10Times() {
-		this.latest += 10;
+	public void update() {
+	    if(latest > highest) {
+            highest = latest;
+        }
 	}
 	
 	public void increase() {
-		this.latest++;
+		latest++;
 	}
 	
 	public void reset() {
-		this.latest = 0;
+		latest = 0;
 	}
-	
-	public void setHighest() {
-		if(this.latest > this.highest) {
-			this.highest = this.latest;
-		}
-	}
+
+    public String highest() {
+        return "Highest Score: " + Integer.toString(highest);
+    }
 }
