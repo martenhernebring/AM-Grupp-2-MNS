@@ -126,7 +126,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // and check for collision with the space ship
 
         if (status.isGameOver()) {
-            sleepQuarterSecond();
+            Time.sleepQuarterSecond();
             return;
         } else if (!status.isStart()) {
             moveAliens();
@@ -136,14 +136,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         status.update();
 
         this.repaint();
-    }
-
-    private void sleepQuarterSecond() {
-        try {
-            TimeUnit.MILLISECONDS.sleep(250);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }     
     }
 
     private void moveAliens() {
