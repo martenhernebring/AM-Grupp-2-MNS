@@ -11,10 +11,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 /**
@@ -39,7 +42,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private List<Rectangle> aliens;
     private Rectangle spaceShip;
     private Score score;
-
+    private Map<Integer, String> top10; 
+    
     private int width;
     private int height;
     
@@ -47,6 +51,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         this.width = width;
         this.height = height;
         score = new Score();
+        top10 = new TreeMap<>(); 
         gameOver = false;
         reset();
     }
@@ -134,6 +139,10 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         
         g.drawString(latestScore, 20, d.width / 2 - 24);
         g.drawString(highestScore, 20, d.width / 2 + 24);
+        
+        JTextField text = new JTextField(); 
+        String name = text.getText();  
+        top10.put(score.getLatest(), name);
     }
 
     @Override
