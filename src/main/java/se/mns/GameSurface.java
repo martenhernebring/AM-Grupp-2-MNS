@@ -205,6 +205,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 final int maxHeight = this.getSize().height - spaceShip.height - spaceshipMovement;
                 if (spaceShip.y < maxHeight) {
                     spaceShip.translate(0, 2*spaceshipMovement);
+                } else {
+                    gameOver = true;
                 }
             }
 
