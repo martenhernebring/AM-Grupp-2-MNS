@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -46,6 +47,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         this.width = width;
         this.height = height;
         score = new Score();
+        gameOver = false;
         reset();
     }
 
@@ -55,7 +57,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         changeDifficulty = false;
         speedUp = false;
         
-        gameOver = false;
         start = true;
         aliens = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
@@ -93,6 +94,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
      * surface.
      * 
      * @param g the graphics to paint on
+     * @throws InterruptedException 
      */
     private void repaint(Graphics g) {
         final Dimension d = this.getSize();
@@ -141,6 +143,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // and check for collision with the space ship
 
         if (gameOver) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(250);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt(); 
+            }
             return;
 
         } else if (!start) {
@@ -205,6 +212,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
         if(!gameOver) {
             start = false;
+        } else if(start){
+            gameOver = false;
         }
         spacePressed = false;
     }
@@ -219,15 +228,16 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // this event triggers when we press a key and then
         // we will move the space ship up if the game is not over yet
 
-        if (gameOver && !start) {
-            reset();
+        if (gameOver) {
+            if(!start) {
+                reset();
+            }
             return;
         }
 
         final int kc = e.getKeyCode();
 
         if (kc == KeyEvent.VK_SPACE) {
-
             spacePressed = true;
         } else if(kc==KeyEvent.VK_D){
             changeDifficulty = true;
