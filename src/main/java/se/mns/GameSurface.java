@@ -25,17 +25,7 @@ import javax.swing.Timer;
 public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private static final long serialVersionUID = 6260582674762246325L;
 
-    //Game Status fields
-    private boolean start; 
-    private boolean gameOver; 
-    private boolean speedUp; 
-    private boolean easyMode;
-
-    //Key Pressed fields
-    private boolean spacePressed;
-    private boolean changeDifficulty;
-    private boolean changeSpeed;
-
+    private Status status;
     
     //Game animation objects
     private List<Rectangle> aliens;
@@ -50,8 +40,9 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     public GameSurface(final int width, final int height) {
         this.width = width;
         this.height = height;
+        status = new Status();
         score = new Score();
-        gameOver = false;
+        status.setGameOver(false);
         reset();
     }
 
@@ -60,7 +51,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     	
     	setEasyDifficulty();
         
-        start = true;
+        status.setStart(true);
         
         aliens = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
@@ -74,10 +65,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void setEasyDifficulty() {
-    	easyMode = true;
-        changeDifficulty = false;
-        changeSpeed = false;
-        speedUp = false;
+    	
+    	status.setEasyMode(true);
+    	status.setChangeDifficulty(false);
+        status.setChangeSpeed(false);
+        status.setSpeedUp(false);
 		
 	}
 
@@ -91,7 +83,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private void addAlien(final int width, final int height) {
         int x = ThreadLocalRandom.current().nextInt(width / 2, width - 30);
         int y = ThreadLocalRandom.current().nextInt(20, height - 30);
-        if(easyMode) {
+        if(status.isEasyMode()) {
             final int easy = 20;
             aliens.add(new Rectangle(x, y, easy, easy));
         } else {
@@ -111,7 +103,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private void repaint(Graphics g) {
         final Dimension d = this.getSize();
 
-        if (gameOver) {
+        if (status.isGameOver()) {
             showMenu(g, d);
             return;
         }
@@ -155,7 +147,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // update the positions of all aliens
         // and check for collision with the space ship
 
-        if (gameOver) {
+        if (status.isGameOver()) {
             try {
                 TimeUnit.MILLISECONDS.sleep(250);
             } catch (InterruptedException ex) {
@@ -163,12 +155,12 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             }
             return;
 
-        } else if (!start) {
+        } else if (!status.isStart()) {
             final List<Rectangle> toRemove = new ArrayList<>();
 
             for (Rectangle alien : aliens) {
             	
-            	if(speedUp) {  
+            	if(status.isSpeedUp()) {  
             		alien.translate(-5, 0);
             	} else {
             		alien.translate(-1, 0);
@@ -185,7 +177,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 }
 
                 if (alien.intersects(spaceShip)) {
-                    gameOver = true;
+                    status.setGameOver(true);
                 }
             }
 
@@ -199,7 +191,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
             }
             final int spaceshipMovement = 2;
-            if(spacePressed) {
+            if(status.isSpacePressed()) {
                 final int minHeight = spaceshipMovement;
                 if (spaceShip.y > minHeight) {
                     spaceShip.translate(0, -spaceshipMovement);
@@ -209,20 +201,21 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 if (spaceShip.y < maxHeight) {
                     spaceShip.translate(0, 2*spaceshipMovement);
                 } else {
-                    gameOver = true;
+                    status.setGameOver(true);
                 }
             }
 
         }
         
-        if(changeDifficulty) {
-            easyMode = !easyMode;
-            changeDifficulty = false;
+        if(status.isChangeDifficulty()) {
+            status.setEasyMode(!status.isEasyMode());
+            status.setChangeDifficulty(false);
         }
         
-        if(changeSpeed) {
-            speedUp = !speedUp;
-            changeSpeed = false;
+        if(status.isChangeSpeed()) {
+        	
+        	status.setSpeedUp(!status.isSpeedUp());
+        	status.setChangeSpeed(false);
         }
 
         this.repaint();
@@ -230,12 +223,12 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(!gameOver) {
-            start = false;
-        } else if(start){
-            gameOver = false;
+        if(!status.isGameOver()) {
+            status.setStart(false);
+        } else if(status.isStart()){
+            status.setGameOver(false);
         }
-        spacePressed = false;
+        status.setSpacePressed(false);
     }
 
     @Override
@@ -248,8 +241,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // this event triggers when we press a key and then
         // we will move the space ship up if the game is not over yet
 
-        if (gameOver) {
-            if(!start) {
+        if (status.isGameOver()) {
+            if(!status.isStart()) {
                 reset();
             }
             return;
@@ -258,11 +251,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         final int kc = e.getKeyCode();
 
         if (kc == KeyEvent.VK_SPACE) {
-            spacePressed = true;
+        	status.setSpacePressed(true);
         } else if(kc==KeyEvent.VK_D){
-            changeDifficulty = true;
+        	status.setChangeDifficulty(true);
         } else if(kc==KeyEvent.VK_S) {
-            changeSpeed = true;
+        	status.setChangeSpeed(true);
         }
     }
 
