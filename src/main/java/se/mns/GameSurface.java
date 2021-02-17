@@ -11,13 +11,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.Timer;
 
 /**
@@ -29,20 +25,24 @@ import javax.swing.Timer;
 public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private static final long serialVersionUID = 6260582674762246325L;
 
-    private boolean start; //easyMode = true, speedUp = false, change = false
-    private boolean gameOver; //easyMode = true, speedUp = false, change = false
+    //Game Status fields
+    private boolean start; 
+    private boolean gameOver; 
     private boolean speedUp; 
     private boolean easyMode;
 
+    //Key Pressed fields
     private boolean spacePressed;
     private boolean changeDifficulty;
     private boolean changeSpeed;
 
-    private Timer timer;
+    
+    //Game animation objects
     private List<Rectangle> aliens;
     private Rectangle spaceShip;
+    
+    private Timer timer;
     private Score score;
-    private Map<Integer, String> top10; 
     
     private int width;
     private int height;
@@ -51,17 +51,14 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         this.width = width;
         this.height = height;
         score = new Score();
-        top10 = new TreeMap<>(); 
         gameOver = false;
         reset();
     }
 
+    
     private void reset() {
-        //easy difficulty
-        easyMode = true;
-        changeDifficulty = false;
-        changeSpeed = false;
-        speedUp = false;
+    	
+    	setEasyDifficulty();
         
         start = true;
         
@@ -76,7 +73,16 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         score.reset();
     }
 
-    @Override
+    private void setEasyDifficulty() {
+    	easyMode = true;
+        changeDifficulty = false;
+        changeSpeed = false;
+        speedUp = false;
+		
+	}
+
+
+	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         repaint(g);
@@ -139,10 +145,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         
         g.drawString(latestScore, 20, d.width / 2 - 24);
         g.drawString(highestScore, 20, d.width / 2 + 24);
-        
-        JTextField text = new JTextField(); 
-        String name = text.getText();  
-        top10.put(score.getLatest(), name);
+      
     }
 
     @Override
