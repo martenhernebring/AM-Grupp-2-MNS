@@ -41,4 +41,5 @@ bin/
 
 #linux mac
 *.sh
-
+# graphic change
+src/main/java/se/mns/SimpleSurface.java

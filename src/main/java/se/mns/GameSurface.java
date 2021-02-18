@@ -28,8 +28,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private Status status;
 
     // Game animation objects
-    private List<Rectangle> aliens;
-    private Rectangle spaceShip;
+    private List<Rectangle> obstacles;
+    private Rectangle bird;
 
     private Timer timer;
     private Score score;
@@ -44,25 +44,28 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         status.reset();
         score.reset();
 
-        aliens = new ArrayList<>();
+        obstacles = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
-            addAlien();
+            addObstacle();
         }
-        spaceShip = new Rectangle(20, 20, 30, 20);
+        bird = new Rectangle(20, 20, 30, 20);
 
         timer = new Timer(50, this);
         timer.start();
     }
 
-    private void addAlien() {
+    private void addObstacle() {
+        //int x = ThreadLocalRandom.current().nextInt(width / 2, width - 30);
+        //int y = ThreadLocalRandom.current().nextInt(60, height - 50);
+        //obstacles.add(new Rectangle(x, y, 25, 60));
         int x = ThreadLocalRandom.current().nextInt(SIZE / 2, SIZE - 30);
-        int y = ThreadLocalRandom.current().nextInt(20, SIZE - 30);
+        int y = ThreadLocalRandom.current().nextInt(60, SIZE - 50);
         if (status.isEasyMode()) {
-            final int easy = 20;
-            aliens.add(new Rectangle(x, y, easy, easy));
+            //final int easy = 20;
+            obstacles.add(new Rectangle(x, y, 25, 60));
         } else {
-            final int hard = 40;
-            aliens.add(new Rectangle(x, y, hard, hard));
+            //final int hard = 40;
+            obstacles.add(new Rectangle(x, y, 50, 120));
         }
     }
     
@@ -89,15 +92,17 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.cyan);
         g.fillRect(0, 0, SIZE, SIZE);
 
-        // draw the aliens
-        for (Rectangle alien : aliens) {
+        // draw the obstacles
+        for (Rectangle obstacle : obstacles) {
             g.setColor(Color.red);
-            g.fillRect(alien.x, alien.y, alien.width, alien.height);
+            g.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
         }
 
-        // draw the space ship
+        // draw the bird
         g.setColor(Color.black);
-        g.fillRect(spaceShip.x, spaceShip.y, spaceShip.width, spaceShip.height);
+        int angle = 1% 46;
+        //g.fillRect(bird.x, bird.y, bird.width, bird.height);
+        g.fillArc(bird.x, bird.y, bird.width, bird.height, angle, 360-angle *2);
     }
 
     private void showMenu(Graphics g) {
@@ -122,15 +127,15 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         // this will trigger on the timer event
         // if the game is not over yet it will
-        // update the positions of all aliens
+        // update the positions of all obstacles
         // and check for collision with the space ship
 
         if (status.isGameOver()) {
             Time.sleepQuarterSecond();
             return;
         } else if (!status.isStart()) {
-            moveAliens();
-            moveSpaceship();
+            moveobstacles();
+            movebird();
         }
 
         status.update();
@@ -138,49 +143,49 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         this.repaint();
     }
 
-    private void moveAliens() {
+    private void moveobstacles() {
         final List<Rectangle> toRemove = new ArrayList<>();
 
-        for (Rectangle alien : aliens) {
+        for (Rectangle obstacle : obstacles) {
 
             if (status.isSpeedUp()) {
-                alien.translate(-3, 0);
+                obstacle.translate(-3, 0);
             } else {
-                alien.translate(-1, 0);
+                obstacle.translate(-1, 0);
             }
 
-            if (alien.x + alien.width < 0) {
+            if (obstacle.x + obstacle.width < 0) {
                 // we add to another list and remove later
                 // to avoid concurrent modification in a for-each loop
-                toRemove.add(alien);
+                toRemove.add(obstacle);
                 score.increase();
             }
 
-            if (alien.intersects(spaceShip)) {
+            if (obstacle.intersects(bird)) {
                 status.setGameOver(true);
             }
         }
 
-        aliens.removeAll(toRemove);
+        obstacles.removeAll(toRemove);
 
-        // add new aliens for every one that was removed
+        // add new obstacles for every one that was removed
         for (int i = 0; i < toRemove.size(); ++i) {
-            addAlien();
+            addObstacle();
         }
 
     }
 
-    private void moveSpaceship() {
-        final int spaceshipMovement = 2;
+    private void movebird() {
+        final int birdMovement = 2;
         if (status.isSpacePressed()) {
-            final int minHeight = spaceshipMovement;
-            if (spaceShip.y > minHeight) {
-                spaceShip.translate(0, -spaceshipMovement);
+            final int minHeight = birdMovement;
+            if (bird.y > minHeight) {
+                bird.translate(0, -birdMovement);
             }
         } else {
-            final int maxHeight = this.getSize().height - spaceShip.height - spaceshipMovement;
-            if (spaceShip.y < maxHeight) {
-                spaceShip.translate(0, 2 * spaceshipMovement);
+            final int maxHeight = this.getSize().height - bird.height - birdMovement;
+            if (bird.y < maxHeight) {
+                bird.translate(0, 2 * birdMovement);
             } else {
                 status.setGameOver(true);
             }
