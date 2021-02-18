@@ -48,8 +48,8 @@ public class SimpleSurface extends JPanel implements ActionListener, KeyListener
 
     private void addObstacles(final int width, final int height) {
         int x = ThreadLocalRandom.current().nextInt(width / 2, width - 30);
-        int y = ThreadLocalRandom.current().nextInt(50, height - 50);
-        obstacles.add(new Rectangle(x, y, 25, 50));
+        int y = ThreadLocalRandom.current().nextInt(60, height - 50);
+        obstacles.add(new Rectangle(x, y, 25, 60));
     }
     private int angle = 0;
 
