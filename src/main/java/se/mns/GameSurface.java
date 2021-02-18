@@ -105,11 +105,12 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.red);
         g.fillRect(0, 0, SIZE, SIZE);
 
+        //get high scores
         score.update();
         String latestScore = score.latest();
         String highestScore = score.highest();
 
-        //choose font
+        //show high scores
         g.setColor(Color.black);
         g.setFont(new Font("Arial", Font.BOLD, 32));
         g.drawString(latestScore, 20, SIZE / 2 - 24);
@@ -188,12 +189,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (!status.isGameOver()) {
-            status.setStart(false);
-        } else if (status.isStart()) {
-            status.setGameOver(false);
-        }
-        status.setSpacePressed(false);
+        status.keyReleased();
     }
 
     @Override

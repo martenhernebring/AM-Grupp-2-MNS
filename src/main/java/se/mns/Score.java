@@ -14,6 +14,10 @@ public class Score {
 		return "Latest Score: " + Integer.toString(latest);
 	}
 	
+    public String highest() {
+        return "Highest Score: " + Integer.toString(highest);
+    }
+	
 	public void update() {
 	    if(latest > highest) {
             highest = latest;
@@ -27,8 +31,4 @@ public class Score {
 	public void reset() {
 		latest = 0;
 	}
-
-    public String highest() {
-        return "Highest Score: " + Integer.toString(highest);
-    }
 }
