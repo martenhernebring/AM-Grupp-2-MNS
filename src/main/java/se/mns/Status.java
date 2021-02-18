@@ -31,14 +31,8 @@ public class Status {
 	public boolean isSpeedUp() {
 		return speedUp;
 	}
-	public void setSpeedUp(boolean speedUp) {
-		this.speedUp = speedUp;
-	}
 	public boolean isEasyMode() {
 		return easyMode;
-	}
-	public void setEasyMode(boolean easyMode) {
-		this.easyMode = easyMode;
 	}
 	public boolean isSpacePressed() {
 		return spacePressed;
@@ -49,14 +43,8 @@ public class Status {
 	public boolean isUpdateDifficulty() {
 		return updateDifficulty;
 	}
-	public void setUpdateDifficulty(boolean updateDifficulty) {
-		this.updateDifficulty = updateDifficulty;
-	}
 	public boolean isUpdateSpeed() {
 		return updateSpeed;
-	}
-	public void setUpdateSpeed(boolean updateSpeed) {
-		this.updateSpeed = updateSpeed;
 	}
 	
     public void reset() {
