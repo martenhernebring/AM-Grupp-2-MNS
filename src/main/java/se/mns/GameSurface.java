@@ -46,23 +46,22 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         score.reset();
 
         obstacles = new ArrayList<>();
-        for (int i = 0; i < 5; ++i) {
-            addObstacle();
-        }
+        addObstacles();
         bird = new Rectangle(20, 20, 30, 20);
 
         timer = new Timer(50, this);
         timer.start();
     }
 
-    private void addObstacle() {
-        int x = ThreadLocalRandom.current().nextInt(SIZE / 2, SIZE - 30);
-        int y = ThreadLocalRandom.current().nextInt(60, SIZE - 50);
-        if (status.isEasyMode()) {
-            obstacles.add(new Rectangle(x, y, 25, 60));
-        } else {
-            obstacles.add(new Rectangle(x, y, 50, 120));
-        }
+    private void addObstacles() {
+        //TODO = ThreadLocalRandom.current().nextInt(SIZE / 2, SIZE - 30);
+        final int width = 50;
+        final int gap = 140;
+        final int height = 60;
+        obstacles.add(new Rectangle(SIZE-width, 0, width, height + gap));
+        obstacles.add(new Rectangle(SIZE-width, SIZE-60, width, height));
+        //obstacles.add(new Rectangle(SIZE-width, 0, width, height)); //MAX
+        //obstacles.add(new Rectangle(SIZE-width, SIZE-200, width, height + gap)); //MAX
     }
     
     @Override
@@ -164,9 +163,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         obstacles.removeAll(toRemove);
 
         // add new obstacles for every one that was removed
-        for (int i = 0; i < toRemove.size(); ++i) {
-            addObstacle();
-        }
+        addObstacles();
 
     }
 
