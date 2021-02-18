@@ -125,8 +125,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             Time.sleepQuarterSecond();
             return;
         } else if (!status.isStart()) {
-            moveobstacles();
-            movebird();
+            moveObstacles();
+            moveBird();
         }
 
         status.update();
@@ -134,22 +134,20 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         this.repaint();
     }
 
-    private void moveobstacles() {
-        final List<Rectangle> toRemove = new ArrayList<>();
+    private void moveObstacles() {
+        //final List<Rectangle> toRemove = new ArrayList<>();
 
         for (Rectangle obstacle : obstacles) {
 
-            if (status.isSpeedUp()) {
-                obstacle.translate(-3, 0);
-            } else {
-                obstacle.translate(-1, 0);
-            }
+            obstacle.translate(-1, 0);
 
             if (obstacle.x + obstacle.width < 0) {
                 // we add to another list and remove later
                 // to avoid concurrent modification in a for-each loop
-                toRemove.add(obstacle);
+                //toRemove.add(obstacle);
                 score.increase();
+                obstacles = new ArrayList<>();
+                addObstacles();
             }
 
             if (obstacle.intersects(bird)) {
@@ -157,14 +155,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             }
         }
 
-        obstacles.removeAll(toRemove);
-
-        // add new obstacles for every one that was removed
-        addObstacles();
+        //obstacles.removeAll(toRemove);
 
     }
 
-    private void movebird() {
+    private void moveBird() {
         final int birdMovement = 2;
         if (status.isSpacePressed()) {
             final int minHeight = birdMovement;
