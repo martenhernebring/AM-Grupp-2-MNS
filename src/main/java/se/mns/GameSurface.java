@@ -30,6 +30,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     // Game animation objects
     private List<Rectangle> obstacles;
     private Rectangle bird;
+    private int angle = 0;
 
     private Timer timer;
     private Score score;
@@ -100,7 +101,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
         // draw the bird
         g.setColor(Color.black);
-        int angle = 1% 46;
+        angle = (angle + 1) % 46;
         //g.fillRect(bird.x, bird.y, bird.width, bird.height);
         g.fillArc(bird.x, bird.y, bird.width, bird.height, angle, 360-angle *2);
     }
