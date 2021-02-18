@@ -54,14 +54,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void addObstacles() {
-        //TODO = ThreadLocalRandom.current().nextInt(SIZE / 2, SIZE - 30);
+        int random = ThreadLocalRandom.current().nextInt(30, 270);
         final int width = 50;
-        final int gap = 140;
-        final int height = 60;
-        obstacles.add(new Rectangle(SIZE-width, 0, width, height + gap));
-        obstacles.add(new Rectangle(SIZE-width, SIZE-60, width, height));
-        //obstacles.add(new Rectangle(SIZE-width, 0, width, height)); //MAX
-        //obstacles.add(new Rectangle(SIZE-width, SIZE-200, width, height + gap)); //MAX
+        final int gap = 70;
+        obstacles.add(new Rectangle(SIZE-width, 0, width, random));
+        obstacles.add(new Rectangle(SIZE-width, random + gap, width, SIZE - random - gap));
     }
     
     @Override
