@@ -56,16 +56,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void addObstacle() {
-        //int x = ThreadLocalRandom.current().nextInt(width / 2, width - 30);
-        //int y = ThreadLocalRandom.current().nextInt(60, height - 50);
-        //obstacles.add(new Rectangle(x, y, 25, 60));
         int x = ThreadLocalRandom.current().nextInt(SIZE / 2, SIZE - 30);
         int y = ThreadLocalRandom.current().nextInt(60, SIZE - 50);
         if (status.isEasyMode()) {
-            //final int easy = 20;
             obstacles.add(new Rectangle(x, y, 25, 60));
         } else {
-            //final int hard = 40;
             obstacles.add(new Rectangle(x, y, 50, 120));
         }
     }
@@ -102,7 +97,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // draw the bird
         g.setColor(Color.black);
         angle = (angle + 1) % 46;
-        //g.fillRect(bird.x, bird.y, bird.width, bird.height);
         g.fillArc(bird.x, bird.y, bird.width, bird.height, angle, 360-angle *2);
     }
 
