@@ -37,6 +37,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     public GameSurface() {
         save = new Save();
+        status = new Status();
         reset();
     }
 
