@@ -101,16 +101,13 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.red);
         g.fillRect(0, 0, SIZE, SIZE);
 
-        //get high scores
         score.update();
-        String latestScore = score.latest();
-        String highestScore = score.highest();
 
         //show high scores
         g.setColor(Color.black);
         g.setFont(new Font("Arial", Font.BOLD, 32));
-        g.drawString(latestScore, 20, SIZE / 2 - 24);
-        g.drawString(highestScore, 20, SIZE / 2 + 24);
+        g.drawString(score.latest(), 20, SIZE / 2 - 24);
+        g.drawString(score.highest(), 20, SIZE / 2 + 24);
 
     }
 
@@ -135,11 +132,12 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void moveObstacles() {
-        //final List<Rectangle> toRemove = new ArrayList<>();
+        
+        int speed = status.isSpeedUp() ? 3 : 1;
 
         for (Rectangle obstacle : obstacles) {
 
-            obstacle.translate(-1, 0);
+            obstacle.translate(-speed, 0);
 
             if (obstacle.x + obstacle.width < 0) {
                 // we add to another list and remove later
