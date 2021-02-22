@@ -10,15 +10,15 @@ public class Score {
 		highest = 0;
 	}
 	
-	public String latest() {
-		return "Latest Score: " + Integer.toString(latest);
-	}
-	
-    public String highest() {
-        return "Highest Score: " + Integer.toString(highest);
+	public int getLatest() {
+        return latest;
     }
-	
-	public void update() {
+
+    public int getHighest() {
+        return highest;
+    }
+
+    public void update() {
 	    if(latest > highest) {
             highest = latest;
         }

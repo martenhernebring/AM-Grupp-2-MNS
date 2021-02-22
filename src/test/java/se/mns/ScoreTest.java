@@ -10,6 +10,7 @@ class scoreTest {
 	
 	@Test
 	public void testConstructor() {
+<<<<<<< HEAD
 		//assertEquals(0, score.getLatest());
 	}
 	
@@ -36,6 +37,34 @@ class scoreTest {
 		score.increase();
 		//score.setHighest();
 		//assertEquals(1, score.getHighest());
+=======
+		assertEquals(0, point.getLatest());
+	}
+	
+	@Test
+	public void testGetLatestPoints() {
+		assertEquals(0, point.getLatest());
+	}
+	
+	@Test
+	public void testPointIncrease() {
+		point.increase();
+		assertEquals(1, point.getLatest());
+	}
+	
+	@Test
+	public void testResetPoints() {
+		point.increase();
+		point.reset();
+		assertEquals(0, point.getLatest());
+	}
+
+	@Test
+	public void testSetHigestPoint() {
+		point.increase();
+		point.update();
+		assertEquals(1, point.getHighest());
+>>>>>>> save
 	}
 
 	
