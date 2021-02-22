@@ -25,7 +25,6 @@ public class StatusTest {
     @Test
     void resetTest() {
         status.reset();
-        assertTrue(status.isEasyMode());
         assertTrue(status.isStart());
     }
     
@@ -33,7 +32,6 @@ public class StatusTest {
     void updateTest() {
         status.reset();
         status.update();
-        assertTrue(status.isEasyMode()); 
         assertFalse(status.isSpeedUp());
     }
     

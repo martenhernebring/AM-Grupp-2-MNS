@@ -6,12 +6,10 @@ public class Status {
 
     // Key press status
     private boolean spacePressed;
-    private boolean updateDifficulty;
     private boolean updateSpeed;
     
     // Game mode status
     private boolean speedUp;
-    private boolean easyMode;
     private boolean start;
     private boolean gameOver;
     
@@ -21,10 +19,6 @@ public class Status {
     
     public boolean isSpeedUp() {
         return speedUp;
-    }
-
-    public boolean isEasyMode() {
-        return easyMode;
     }
 
     public boolean isStart() {
@@ -40,18 +34,12 @@ public class Status {
     }
 
     public void reset() {
-        easyMode = true;
-        updateDifficulty = false;
         updateSpeed = false;
         speedUp = false;
         start = true;
     }
 
     public void update() {
-        if (updateDifficulty) {
-            easyMode = !easyMode;
-            updateDifficulty = false;
-        }
         if (updateSpeed) {
             speedUp = !speedUp;
             updateSpeed = false;
@@ -62,9 +50,6 @@ public class Status {
         switch (kc) {
         case KeyEvent.VK_SPACE:
             spacePressed = true;
-            break;
-        case KeyEvent.VK_D:
-            updateDifficulty = true;
             break;
         case KeyEvent.VK_S:
             updateSpeed = true;
