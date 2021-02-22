@@ -38,6 +38,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     public GameSurface() {
         save = new Save();
         status = new Status();
+        timer = new Timer(50, this);
         reset();
     }
 
@@ -49,8 +50,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         addObstacles();
         bird = new Rectangle(20, 20, 30, 20);
 
-        timer = new Timer(50, this);
-        timer.start();
+        timer.restart();
     }
 
     private void addObstacles() {
