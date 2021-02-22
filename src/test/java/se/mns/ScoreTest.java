@@ -4,40 +4,43 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class scoreTest {
+class ScoreTest {
 
 	Score score = new Score();
 	
 	@Test
-	public void testConstructor() {
-		//assertEquals(0, score.getLatest());
+	public void constructorTest() {
+		assertEquals("Latest Score: 0", score.latest());
 	}
 	
 	@Test
-	public void testGetLatestscores() {
-		//assertEquals(0, score.getLatest());
+	public void latestTest() {
+		assertEquals("Latest Score: 0", score.latest());
 	}
 	
 	@Test
-	public void testscoreIncrease() {
+	public void highestTest() {
+		assertEquals("Highest Score: 0", score.highest());
+	}
+	
+	@Test
+	public void increaseTest() {
 		score.increase();
-		//assertEquals(1, score.getLatest());
+		assertEquals("Latest Score: 1", score.latest());
 	}
 	
 	@Test
-	public void testResetscores() {
+	public void updateTest() {
+		score.increase();
+		score.update();
+		assertEquals("Highest Score: 1", score.highest());
+	}
+	
+	@Test
+	public void resetTest() {
 		score.increase();
 		score.reset();
-		//assertEquals(0, score.getLatest());
+		assertEquals("Latest Score: 0", score.latest());
 	}
-
-	@Test
-	public void testSetHigestscore() {
-		score.increase();
-		//score.setHighest();
-		//assertEquals(1, score.getHighest());
-	}
-
-	
 
 }
