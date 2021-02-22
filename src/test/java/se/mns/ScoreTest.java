@@ -10,32 +10,32 @@ class PointTest {
 	
 	@Test
 	public void testConstructor() {
-		//assertEquals(0, point.getLatest());
+		assertEquals(0, point.getLatest());
 	}
 	
 	@Test
 	public void testGetLatestPoints() {
-		//assertEquals(0, point.getLatest());
+		assertEquals(0, point.getLatest());
 	}
 	
 	@Test
 	public void testPointIncrease() {
 		point.increase();
-		//assertEquals(1, point.getLatest());
+		assertEquals(1, point.getLatest());
 	}
 	
 	@Test
 	public void testResetPoints() {
 		point.increase();
 		point.reset();
-		//assertEquals(0, point.getLatest());
+		assertEquals(0, point.getLatest());
 	}
 
 	@Test
 	public void testSetHigestPoint() {
 		point.increase();
-		//point.setHighest();
-		//assertEquals(1, point.getHighest());
+		point.update();
+		assertEquals(1, point.getHighest());
 	}
 
 	

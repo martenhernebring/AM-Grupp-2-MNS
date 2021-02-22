@@ -33,17 +33,17 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private int angle = 0;
 
     private Timer timer;
-    private Score score;
+    private Save save;
 
     public GameSurface() {
         status = new Status();
-        score = new Score();
+        save = new Save();
         reset();
     }
 
     private void reset() {
         status.reset();
-        score.reset();
+        save.reset();
 
         obstacles = new ArrayList<>();
         addObstacles();
@@ -101,16 +101,16 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.red);
         g.fillRect(0, 0, SIZE, SIZE);
 
-        //get high scores
-        score.update();
-        String latestScore = score.latest();
-        String highestScore = score.highest();
+        //get high saves
+        save.update();
+        String latestsave = save.latest();
+        String highestsave = save.highest();
 
-        //show high scores
+        //show high saves
         g.setColor(Color.black);
         g.setFont(new Font("Arial", Font.BOLD, 32));
-        g.drawString(latestScore, 20, SIZE / 2 - 24);
-        g.drawString(highestScore, 20, SIZE / 2 + 24);
+        g.drawString(latestsave, 20, SIZE / 2 - 24);
+        g.drawString(highestsave, 20, SIZE / 2 + 24);
 
     }
 
@@ -145,7 +145,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 // we add to another list and remove later
                 // to avoid concurrent modification in a for-each loop
                 //toRemove.add(obstacle);
-                score.increase();
+                save.increase();
                 obstacles = new ArrayList<>();
                 addObstacles();
             }
