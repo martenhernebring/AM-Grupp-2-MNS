@@ -9,6 +9,11 @@ class scoreTest {
 	Score score = new Score();
 	
 	@Test
+    public void testConstructor() {
+        assertEquals(0, score.getLatest());
+    }
+	
+	@Test
 	public void testGetLatestscores() {
 		assertEquals(0, score.getLatest());
 	}
