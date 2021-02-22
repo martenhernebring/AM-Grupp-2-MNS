@@ -9,38 +9,42 @@ class ScoreTest {
 	Score score = new Score();
 	
 	@Test
-	public void constructorTest() {
-		assertEquals("Latest Score: 0", score.latest());
+    public void testConstructor() {
+        assertEquals(0, score.getLatest());
+    }
+	
+	@Test
+	public void testGetLatestscores() {
+		assertEquals(0, score.getLatest());
 	}
 	
 	@Test
-	public void latestTest() {
-		assertEquals("Latest Score: 0", score.latest());
-	}
-	
-	@Test
-	public void highestTest() {
-		assertEquals("Highest Score: 0", score.highest());
+	public void testscoreIncrease() {
+		score.increase();
+		assertEquals(1, score.getLatest());
+
 	}
 	
 	@Test
 	public void increaseTest() {
 		score.increase();
-		assertEquals("Latest Score: 1", score.latest());
+		score.reset();
+		assertEquals(0, score.getLatest());
 	}
 	
 	@Test
 	public void updateTest() {
 		score.increase();
 		score.update();
-		assertEquals("Highest Score: 1", score.highest());
+		assertEquals(1, score.getHighest());
+
 	}
 	
 	@Test
 	public void resetTest() {
 		score.increase();
 		score.reset();
-		assertEquals("Latest Score: 0", score.latest());
+		assertEquals("Latest Score: 0", score.getLatest());
 	}
 
 }
