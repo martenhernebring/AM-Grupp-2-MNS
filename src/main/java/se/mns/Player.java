@@ -6,10 +6,20 @@ public class Player implements Comparable<Player> {
 	private int score;
 
 	public Player(String name, int score) {
-		this.name = name;
+		setName(name);
 		this.score = score;
 	}
 
+	private void setName(String name) {
+		if(containsSpace(name)) {
+			throw new IllegalArgumentException("No space is allowed in name");
+		} else if(containsNumber(name)) {
+			throw new IllegalArgumentException("No numbers are allowed in your name.");
+		} 
+		else {
+			this.name = name;
+		}
+	}
 	public String getName(){
 		return name;
 	}
@@ -21,6 +31,26 @@ public class Player implements Comparable<Player> {
 	@Override
 	public int compareTo(Player p) {
 		return Integer.valueOf(this.score).compareTo(Integer.valueOf(p.getScore()));
+	}
+	
+	private boolean containsSpace(String name) {
+		char[] chars = name.toCharArray();
+		for(char c : chars) {
+			if(c == ' ') {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean containsNumber(String name) {
+		char[] chars = name.toCharArray();
+		for(char c : chars) {
+			if (Character.isDigit(c)) {
+	            return true;
+	        }
+		}
+		return false;
 	}
 
 }
