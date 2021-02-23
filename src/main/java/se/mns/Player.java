@@ -1,26 +1,26 @@
 package se.mns;
 
 public class Player implements Comparable<Player> {
-	
+
 	private String name;
-    private int score;
-    
-    public Player(String name, int score) {
-        this.name = name;
-        this.score = score;
-    }
+	private int score;
 
-    public String getName(){
-        return name;
-    }
+	public Player(String name, int score) {
+		this.name = name;
+		this.score = score;
+	}
 
-    public int getScore(){
-        return score;
-    }
+	public String getName(){
+		return name;
+	}
 
-    @Override
-    public int compareTo(Player p) {
-        return Integer.valueOf(this.score).compareTo(Integer.valueOf(p.getScore()));
-    }
+	public int getScore(){
+		return score;
+	}
+
+	@Override
+	public int compareTo(Player p) {
+		return Integer.valueOf(this.score).compareTo(Integer.valueOf(p.getScore()));
+	}
 
 }
