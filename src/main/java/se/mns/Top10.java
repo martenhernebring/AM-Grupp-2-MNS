@@ -3,7 +3,6 @@ package se.mns;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.TreeMap;
 
 public class Top10 {
 	
@@ -25,6 +24,5 @@ private List<Player> players = new ArrayList<>();
     public List<Player> getPlayers(){
         return players;
     }
-	
 
 }
