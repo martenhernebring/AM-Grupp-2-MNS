@@ -20,6 +20,7 @@ public class Save extends Score{
         Path target = Path.of(fileName).toAbsolutePath().normalize();
         try (BufferedWriter writer = Files.newBufferedWriter(target, StandardOpenOption.CREATE)) {
             writer.write(latest());
+            writer.write("\n");
             writer.write(highest());
         }
     }
