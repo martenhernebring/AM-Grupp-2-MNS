@@ -10,14 +10,21 @@ public class Top10 {
 
 	public void add(Player p){
 		players.add(p);
+		
+		sortDescending();
 
-		//Sort the list by score. Reverse for descending order.
-		Collections.sort(players, Collections.reverseOrder());    
+		remove11th();
+		
+	}
 
-		//Removes the last(11th) element
+	private void sortDescending() {
+		
+		Collections.sort(players, Collections.reverseOrder());
+	}
+	
+	private void remove11th() {
 		if(players.size()>10){
 			players.remove(players.size()-1);
-
 		}
 	}
 
