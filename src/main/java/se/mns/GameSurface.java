@@ -127,12 +127,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             top10.add(player);
         }
         
-        for(int i = 0; i<top10.getPlayers().size(); i++) {
-        	System.out.println(i+1 +":"+top10.getPlayers().get(i));
-        	System.out.println("**********************************");
-        }
-        
-        
         //Save name TODO
         score.updateHighest();
         score.write();
