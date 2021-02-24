@@ -40,12 +40,15 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     private Timer timer;
     private Score score;
+    private Top10 top10;
+    private Player player;
 
     public GameSurface() {
 
         status = new Status();
         timer = new Timer(50, this);
         score = new Score();
+        top10 = new Top10();
         reset();
     }
 
@@ -120,8 +123,16 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         
         if(score.getLatest() > score.getHighest()) {
             name = JOptionPane.showInputDialog("What is your name?");
-            System.out.println(name);
+            player = new Player(name, score.getLatest());
+            top10.add(player);
         }
+        
+        for(int i = 0; i<top10.getPlayers().size(); i++) {
+        	System.out.println(i+1 +":"+top10.getPlayers().get(i));
+        	System.out.println("**********************************");
+        }
+        
+        
         //Save name TODO
         score.updateHighest();
         score.write();
