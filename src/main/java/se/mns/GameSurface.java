@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -34,18 +36,19 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private int angle = 0;
 
     private Timer timer;
-    private Save save;
+    private Score score;
 
     public GameSurface() {
-        save = new Save();
+
         status = new Status();
         timer = new Timer(50, this);
+        score = new Score();
         reset();
     }
 
     private void reset() {
         status.reset();
-        save.reset();
+        score.reset();
 
         obstacles = new ArrayList<>();
         addObstacles();
@@ -108,15 +111,15 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.red);
         g.fillRect(0, 0, SIZE, SIZE);
 
-        save.update();
-        save.write("score.txt");
+        score.update();
+        score.write("score.txt");
 
-        //show high saves
+        //show high scores
         g.setColor(Color.black);
         g.setFont(new Font("Arial", Font.BOLD, 32));
         
-        g.drawString(save.latest(), 20, SIZE / 2 - 24);
-        g.drawString(save.highest(), 20, SIZE / 2 + 24);
+        g.drawString(score.latest(), 20, SIZE / 2 - 24);
+        g.drawString(score.highest(), 20, SIZE / 2 + 24);
 
     }
 
@@ -128,7 +131,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // and check for collision with the space ship
 
         if (status.isGameOver()) {
-            Time.sleepQuarterSecond();
+            try {
+                TimeUnit.MILLISECONDS.sleep(250);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
             return;
         } else if (!status.isStart()) {
             moveObstacles();
@@ -152,7 +159,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 // we add to another list and remove later
                 // to avoid concurrent modification in a for-each loop
                 //toRemove.add(obstacle);
-                save.increase();
+                score.increase();
                 obstacles = new ArrayList<>();
                 addObstacles();
             }
