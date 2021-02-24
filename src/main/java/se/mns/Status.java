@@ -39,15 +39,15 @@ public class Status {
         start = true;
     }
 
-    public void update() {
+    public void changeSpeed() {
         if (updateSpeed) {
             speedUp = !speedUp;
             updateSpeed = false;
         }
     }
 
-    public void keyPressed(int kc) {
-        switch (kc) {
+    public void keyPressed(int keycode) {
+        switch (keycode) {
         case KeyEvent.VK_SPACE:
             spacePressed = true;
             break;

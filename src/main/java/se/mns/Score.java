@@ -11,10 +11,12 @@ public class Score {
 	
 	private int latest;
 	private int highest;
+	private Path path;
 	
 	public Score() {
 		latest = 0;
 		highest = 0;
+		path = Path.of("score.txt").toAbsolutePath().normalize();
 	}
 	
 	public int getLatest() {
@@ -25,51 +27,49 @@ public class Score {
         return highest;
     }
 
-    public void update() {
+    public void updateHighest() {
 	    if(latest > highest) {
             highest = latest;
         }
 	}
 	
-	public void increase() {
+	public void increaseLatest() {
 		latest++;
 	}
 	
-	public void reset() {
+	public void resetLatest() {
 		latest = 0;
 	}
 	
-	public String latest() {
+	public String latestText() {
         return "Latest Score: " + Integer.toString(getLatest());
     }
     
-    public String highest() {
+    public String highestText() {
         return "Highest Score: " + Integer.toString(getHighest());
     }
     
-    public void write(String fileName) throws IOException {
-        Path target = Path.of(fileName).toAbsolutePath().normalize();
-        try (BufferedWriter writer = Files.newBufferedWriter(target, StandardOpenOption.CREATE)) {
-            writer.write(latest());
+    public void write() throws IOException {
+        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE)) {
+            writer.write(latestText());
             writer.write("\n");
-            writer.write(highest());
+            writer.write(highestText());
         }
     }
     
-    public String[] read(String fileName) throws IOException {
-        Path source = Path.of(fileName);
-        if (!Files.isReadable(source)) {
-            throw new IllegalArgumentException("The file %s is not readable.%n" + fileName);
+    public void read() throws IOException {
+        if (!Files.isReadable(path)) {
+            throw new IllegalArgumentException("The file %s is not readable.%n" + path);
         }
-        String[] outputLines = new String[2];
-        try (BufferedReader reader = Files.newBufferedReader(source)) {
+        //String[] outputLines = new String[2];
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
-            int index = 0;
+            int i = 0;
             while ((line = reader.readLine()) != null) {
-                outputLines[index] = line;
-                index++;
+                System.out.println(line + " with index " + i);
+                i++;
             }
         }
-        return outputLines;
+        //return outputLines;
     }
 }

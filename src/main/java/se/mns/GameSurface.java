@@ -24,16 +24,18 @@ import javax.swing.Timer;
  * 
  */
 public class GameSurface extends JPanel implements ActionListener, KeyListener {
+    //Required by compiler
     private static final long serialVersionUID = 6260582674762246325L;
 
     static final int SIZE = 400;
+    private static final int PADDING = 0;
 
     private Status status;
 
     // Game animation objects
     private List<Rectangle> obstacles;
     private Rectangle bird;
-    private int angle = 0;
+    private int cakeAngle = 0;
 
     private Timer timer;
     private Score score;
@@ -48,7 +50,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     private void reset() {
         status.reset();
-        score.reset();
+        score.resetLatest();
 
         obstacles = new ArrayList<>();
         addObstacles();
@@ -58,11 +60,13 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void addObstacles() {
-        int random = ThreadLocalRandom.current().nextInt(30, 270);
+        int randomCavity = ThreadLocalRandom.current().nextInt(30, 270);
         final int width = 50;
         final int gap = 70;
-        obstacles.add(new Rectangle(SIZE-width, 0, width, random));
-        obstacles.add(new Rectangle(SIZE-width, random + gap, width, SIZE - random - gap));
+        final int yUpper = 0, yLower = randomCavity + gap;
+        final int heightUpper = randomCavity, heightLower = SIZE - randomCavity - gap;
+        obstacles.add(new Rectangle(SIZE-width, yUpper, width, heightUpper));
+        obstacles.add(new Rectangle(SIZE-width, yLower, width, heightLower));
     }
     
     @Override
@@ -80,46 +84,49 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
      * Call this method when the graphics needs to be repainted on the graphics
      * surface.
      * 
-     * @param g the graphics to paint on
+     * @param graphics the graphics to paint on
      * @throws IOException 
      */
-    private void repaint(Graphics g) throws IOException {
+    private void repaint(Graphics graphics) throws IOException {
 
         if (status.isGameOver()) {
-            showMenu(g);
+            showMenu(graphics);
             return;
         }
 
         // fill the background
-        g.setColor(Color.cyan);
-        g.fillRect(0, 0, SIZE, SIZE);
+        graphics.setColor(Color.cyan);
+        graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
 
         // draw the obstacles
         for (Rectangle obstacle : obstacles) {
-            g.setColor(Color.red);
-            g.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            graphics.setColor(Color.red);
+            graphics.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
         }
 
         // draw the bird
-        g.setColor(Color.black);
-        angle = (angle + 1) % 46;
-        g.fillArc(bird.x, bird.y, bird.width, bird.height, angle, 360-angle *2);
+        graphics.setColor(Color.black);
+        cakeAngle = (cakeAngle + 1) % 46;
+        graphics.fillArc(bird.x, bird.y, bird.width, bird.height, cakeAngle, 360-cakeAngle *2);
     }
 
-    private void showMenu(Graphics g) throws IOException {
+    private void showMenu(Graphics graphics) throws IOException {
         // fill the background
-        g.setColor(Color.red);
-        g.fillRect(0, 0, SIZE, SIZE);
+        graphics.setColor(Color.red);
+        graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
 
-        score.update();
-        score.write("score.txt");
+        score.updateHighest();
+        score.write();
 
         //show high scores
-        g.setColor(Color.black);
-        g.setFont(new Font("Arial", Font.BOLD, 32));
+        graphics.setColor(Color.black);
+        graphics.setFont(new Font("Arial", Font.BOLD, 32));
         
-        g.drawString(score.latest(), 20, SIZE / 2 - 24);
-        g.drawString(score.highest(), 20, SIZE / 2 + 24);
+        final int x = 20;
+        final int yCenter = SIZE / 2;
+        final int diff = 24;
+        graphics.drawString(score.latestText(), x, yCenter - diff);
+        graphics.drawString(score.highestText(), x, yCenter + diff);
 
     }
 
@@ -142,48 +149,50 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             moveBird();
         }
 
-        status.update();
+        status.changeSpeed();
 
         this.repaint();
     }
 
     private void moveObstacles() {
         
-        int speed = status.isSpeedUp() ? 3 : 1;
-
-        for (Rectangle obstacle : obstacles) {
-
-            obstacle.translate(-speed, 0);
-
-            if (obstacle.x + obstacle.width < 0) {
-                // we add to another list and remove later
-                // to avoid concurrent modification in a for-each loop
-                //toRemove.add(obstacle);
-                score.increase();
-                obstacles = new ArrayList<>();
-                addObstacles();
-            }
-
-            if (obstacle.intersects(bird)) {
-                status.setGameOver(true);
-            }
+        final int fastSpeed = 3, normalSpeed = 1;
+        int xSpeed = status.isSpeedUp() ? fastSpeed : normalSpeed;
+        
+        moveObstacle(obstacles.get(0), xSpeed);
+        moveObstacle(obstacles.get(1), xSpeed);
+        
+        if (obstacles.get(0).x + obstacles.get(0).width < 0) {
+            // we add to another list and remove later
+            // to avoid concurrent modification in a for-each loop
+            obstacles = new ArrayList<>();
+            score.increaseLatest();
+            addObstacles();
         }
 
-        //obstacles.removeAll(toRemove);
-
+    }
+    
+    private void moveObstacle(Rectangle obstacle, int speed) {
+        
+        obstacle.translate(-speed, 0);
+        
+        if (obstacle.intersects(bird)) {
+            status.setGameOver(true);
+        }
     }
 
     private void moveBird() {
-        final int birdMovement = 2;
+        final int ySpeed = 2;
+        final int xSpeed = 0;
         if (status.isSpacePressed()) {
-            final int minHeight = birdMovement;
-            if (bird.y > minHeight) {
-                bird.translate(0, -birdMovement);
+            final int yTop = ySpeed;
+            if (bird.y > yTop) {
+                bird.translate(xSpeed, -ySpeed);
             }
         } else {
-            final int maxHeight = this.getSize().height - bird.height - birdMovement;
-            if (bird.y < maxHeight) {
-                bird.translate(0, 2 * birdMovement);
+            final int yBottom = this.getSize().height - bird.height - ySpeed;
+            if (bird.y < yBottom) {
+                bird.translate(xSpeed, 2 * ySpeed);
             } else {
                 status.setGameOver(true);
             }
@@ -201,7 +210,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent evt) {
         // this event triggers when we press a key and then
         // we will move the space ship up if the game is not over yet
         if (status.isGameOver()) {
@@ -210,8 +219,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             }
             return;
         }
-        final int kc = e.getKeyCode();
-        status.keyPressed(kc);
+        status.keyPressed(evt.getKeyCode());
     }
 
 }

@@ -9,15 +9,15 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  */
 public class App {
     public static void main(String[] args) {
-        JFrame main = new JFrame("Flappy Birb");
+        JFrame frame = new JFrame("Flappy Birb");
 
-        GameSurface gs = new GameSurface();
+        var gameSurface = new GameSurface();
 
-        main.setSize(GameSurface.SIZE, GameSurface.SIZE); 
-        main.setResizable(false);
-        main.add(gs);
-        main.addKeyListener(gs);
-        main.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        main.setVisible(true);
+        frame.setSize(GameSurface.SIZE, GameSurface.SIZE); 
+        frame.setResizable(false);
+        frame.add(gameSurface);
+        frame.addKeyListener(gameSurface);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
