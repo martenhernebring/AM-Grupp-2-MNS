@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 class Top10Test {
 
 	Top10 top10 = new Top10();
-	Player player1 = new Player("Naoya1", 10);
-	Player player2 = new Player("Naoya2", 20);
+	Player player1 = new Player("Naoya", 10);
+	Player player2 = new Player("Naoya", 20);
 	
 	@Test
 	public void addDescendingOrderTest() {
