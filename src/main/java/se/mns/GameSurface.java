@@ -156,7 +156,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     private void moveObstacles() {
         
-        final int fastSpeed = 3, normalSpeed = 1;
+        final int fastSpeed = 5, normalSpeed = 3;
         int xSpeed = status.isSpeedUp() ? fastSpeed : normalSpeed;
         
         moveObstacle(obstacles.get(0), xSpeed);

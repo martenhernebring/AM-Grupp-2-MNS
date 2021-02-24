@@ -31,7 +31,7 @@ public class StatusTest {
     @Test
     void updateTest() {
         status.reset();
-        status.update();
+        status.changeSpeed();
         assertFalse(status.isSpeedUp());
     }
     

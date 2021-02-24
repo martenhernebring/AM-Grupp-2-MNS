@@ -9,14 +9,6 @@ class PlayerTest {
 	Player player;
 	
 	@Test
-	public void noSpaceAllowedInName() {
-		 
-		assertThrows(IllegalArgumentException.class, ()->{
-			player = new Player(" N a o y a ", 10);
-		});
-	}
-	
-	@Test
 	public void noNumberAllowedInName() {
 		 
 		assertThrows(IllegalArgumentException.class, ()->{

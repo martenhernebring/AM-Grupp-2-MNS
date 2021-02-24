@@ -24,65 +24,64 @@ class ScoreTest {
 	
 	@Test
 	public void testscoreIncrease() {
-		score.increase();
+		score.increaseLatest();
 		assertEquals(1, score.getLatest());
 
 	}
 	
 	@Test
 	public void increaseTest() {
-		score.increase();
-		score.reset();
+		score.increaseLatest();
+		score.resetLatest();
 		assertEquals(0, score.getLatest());
 	}
 	
 	@Test
 	public void updateTest() {
-		score.increase();
-		score.update();
+		score.increaseLatest();
+		score.updateHighest();
 		assertEquals(1, score.getHighest());
 	}
 
 	
 	@Test
     public void latestTest() {
-        assertEquals("Latest Score: 0", score.latest());
+        assertEquals("Latest Score: 0", score.latestText());
     }
     
     @Test
     public void highestTest() {
-        assertEquals("Highest Score: 0", score.highest());
+        assertEquals("Highest Score: 0", score.highestText());
     }
     
     @Test
     public void increaseStringTest() {
-        score.increase();
-        assertEquals("Latest Score: 1", score.latest());
+        score.increaseLatest();
+        assertEquals("Latest Score: 1", score.latestText());
     }
     
     @Test
     public void updateStringTest() {
-        score.increase();
-        score.update();
-        assertEquals("Highest Score: 1", score.highest());
+        score.increaseLatest();
+        score.updateHighest();
+        assertEquals("Highest Score: 1", score.highestText());
     }
     
     @Test
     public void resetTest() {
-        score.increase();
-        score.reset();
-        assertEquals("Latest Score: 0", score.latest());
+        score.increaseLatest();
+        score.resetLatest();
+        assertEquals("Latest Score: 0", score.latestText());
     }
     
     @Test
     public void writeTest() {
         try {
-            Path outFile =  Path.of("test.txt").toAbsolutePath().normalize(); 
+            Path outFile =  Path.of("score.txt").toAbsolutePath().normalize(); 
             if (Files.exists(outFile)) {
-                System.err.printf("The file %s already exists.%n", outFile);
-                fail();
+                System.out.printf("The file %s already exists.%n", outFile);
             } else {
-                score.write("test.txt");
+                score.write();
                 if (!Files.exists(outFile)) {
                     System.err.printf("The file %s does not exist.%n", outFile);
                     fail();

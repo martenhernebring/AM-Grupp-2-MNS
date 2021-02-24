@@ -6,30 +6,21 @@ import java.util.List;
 
 public class Top10 {
 
-	private List<Player> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
-	public void add(Player p){
-		players.add(p);
-		
-		sortDescending();
+    public void add(Player player) {
+        players.add(player);
 
-		remove11th();
-		
-	}
+        Collections.sort(players, Collections.reverseOrder());
 
-	private void sortDescending() {
-		
-		Collections.sort(players, Collections.reverseOrder());
-	}
-	
-	private void remove11th() {
-		if(players.size()>10){
-			players.remove(players.size()-1);
-		}
-	}
+        if (players.size() > 10) {
+            players.remove(players.size() - 1);
+        }
 
-	public List<Player> getPlayers(){
-		return players;
-	}
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 
 }
