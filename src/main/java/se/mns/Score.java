@@ -56,20 +56,21 @@ public class Score {
         }
     }
     
-    public String[] read(String fileName) throws IOException {
+    public void read(String fileName) throws IOException {
         Path source = Path.of(fileName);
         if (!Files.isReadable(source)) {
             throw new IllegalArgumentException("The file %s is not readable.%n" + fileName);
         }
-        String[] outputLines = new String[2];
+        //String[] outputLines = new String[2];
         try (BufferedReader reader = Files.newBufferedReader(source)) {
             String line;
             int index = 0;
             while ((line = reader.readLine()) != null) {
-                outputLines[index] = line;
+                //outputLines[index] = line;
+                System.out.println(index + ":" + line);
                 index++;
             }
         }
-        return outputLines;
+        //return outputLines;
     }
 }
