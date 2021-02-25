@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 import org.junit.jupiter.api.Test;
 
-public class StatusTest {
+class StatusTest {
     
     Status status = new Status();
 

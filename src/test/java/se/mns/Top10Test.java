@@ -11,7 +11,7 @@ class Top10Test {
 	Player player2 = new Player("Naoya", 20);
 	
 	@Test
-	public void addDescendingOrderTest() {
+	void addDescendingOrderTest() {
 		top10.add(player1);
 		top10.add(player2);
 		
@@ -20,7 +20,7 @@ class Top10Test {
 	}
 	
 	@Test
-	public void addDeletes11thPlayer() {
+	void addDeletes11thPlayer() {
 		
 		//Adds 11 players. 
 		for(int i = 0; i<11; i++) {

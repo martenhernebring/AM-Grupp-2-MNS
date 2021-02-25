@@ -116,7 +116,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
 
         score.updateHighest();
-        score.write();
 
         //show high scores
         graphics.setColor(Color.black);
@@ -125,6 +124,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         final int x = 20;
         final int yCenter = SIZE / 2;
         final int diff = 24;
+        
         graphics.drawString(score.latestText(), x, yCenter - diff);
         graphics.drawString(score.highestText(), x, yCenter + diff);
 
