@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -43,7 +44,7 @@ public class Score {
         savePlayerInTop10();
         if (latest > highest) {
             highest = latest;
-            
+
         }
         write();
     }
@@ -65,7 +66,7 @@ public class Score {
     }
 
     private void read() throws IOException {
-        
+
         if (Files.isReadable(path)) {
             try (var scan = new Scanner(path)) {
                 if (scan.hasNextInt()) {
@@ -77,28 +78,26 @@ public class Score {
     }
 
     private void savePlayerInTop10() {
-        if(top10.isNecessary(latest)) {
+        if (top10.isNecessary(latest)) {
             String name = JOptionPane.showInputDialog("What is your name?");
-            
+
             Player player = new Player(name, latest);
             top10.add(player);
-            System.out.println(player); // temporary solution
         }
     }
 
     void write() throws IOException {
-        if (Files.isWritable(path)) {
-            try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE)) {
 
-                /*List<Player> players = top10.getPlayers();
-            	for(Player player: players) {
-            		writer.write(player.toString());
-            	}*/
-            	
-            	writer.write(Integer.toString(highest));
-            	writer.write("\n");
- 
+            List<Player> players = top10.getPlayers();
+            for (Player player : players) {
+                writer.write(player.toString());
             }
+
+            /*
+             * writer.write(Integer.toString(highest)); writer.write("\n");
+             */
+
         }
     }
 }

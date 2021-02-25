@@ -7,7 +7,9 @@ public class Player implements Comparable<Player> {
 
 	public Player(String name, int score) {
 		this.score = score;
-		if(containsNumber(name)) {
+		if(name == null) {
+		    name = "";
+		} else if(containsNumber(name)) {
             throw new IllegalArgumentException("No numbers are allowed in your name.");
         } else {
             this.name = name.strip();
