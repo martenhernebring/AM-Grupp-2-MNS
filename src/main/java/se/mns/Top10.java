@@ -14,13 +14,33 @@ public class Top10 {
         Collections.sort(players, Collections.reverseOrder());
 
         if (players.size() > 10) {
-            players.remove(players.size() - 1);
+            players.remove(last());
         }
 
     }
+    
+    public int size() {
+        return players.size();
+    }
 
-    public List<Player> getPlayers() {
-        return players;
+    List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public boolean addNecessary(int latest) {
+        if (size() < 10) {
+            return true;
+        } else {
+            if(latest > players.get(last()).getScore()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    
+    public int last() {
+        return players.size() - 1;
     }
 
 }

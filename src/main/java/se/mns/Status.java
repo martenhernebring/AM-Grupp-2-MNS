@@ -12,6 +12,15 @@ public class Status {
     private boolean speedUp;
     private boolean start;
     private boolean gameOver;
+    private boolean saved;
+    
+    public boolean isSaved() {
+        return saved;
+    }
+    
+    public void setSave(boolean saved) {
+        this.saved = saved;   
+    }
     
     public boolean isSpacePressed() {
         return spacePressed;
@@ -37,6 +46,7 @@ public class Status {
         updateSpeed = false;
         speedUp = false;
         start = true;
+        saved = false;
     }
 
     public void changeSpeed() {

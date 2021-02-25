@@ -90,8 +90,14 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     private void repaint(Graphics graphics) throws IOException {
 
         if (status.isGameOver()) {
-            showMenu(graphics);
-            return;
+            if(status.isSaved()) {
+                showMenu(graphics);
+                return;
+            } else {
+                score.updateHighest();
+                status.setSave(true);
+                this.repaint();
+            }         
         }
 
         // fill the background
@@ -114,9 +120,6 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // fill the background
         graphics.setColor(Color.red);
         graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
-
-        score.savePlayerInTop10();
-        score.updateHighest();
 
         //show high scores
         graphics.setColor(Color.black);

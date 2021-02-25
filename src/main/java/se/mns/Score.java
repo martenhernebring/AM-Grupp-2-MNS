@@ -6,45 +6,44 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
-
 import javax.swing.JOptionPane;
 
 public class Score {
-	
-	private int latest;
-	private int highest;
-	private Path path;
+
+    private int latest;
+    private int highest;
+    private Path path;
     private Top10 top10;
-    private Player player;
-	
-	public Score() {
-		latest = 0;
-		highest = 0;
-		path = Path.of("score.txt").toAbsolutePath().normalize();
-		top10 = new Top10();
-	}
-	
-	public int getLatest() {
+
+    public Score() {
+        latest = 0;
+        highest = 0;
+        path = Path.of("highest_score.txt").toAbsolutePath().normalize();
+        top10 = new Top10();
+    }
+
+    public int getLatest() {
         return latest;
     }
 
     public int getHighest() {
         return highest;
     }
-    
+
     public Path getPath() {
         return path;
     }
 
     public void updateHighest() throws IOException {
         try {
-            highest = read();
+            read();
         } catch (IOException ex) {
-            highest = 0;
+            // do nothing
         }
+        savePlayerInTop10();
         if (latest > highest) {
             highest = latest;
-            write();
+            write(); // TODO write player name
         }
     }
 
@@ -64,29 +63,34 @@ public class Score {
         return "Highest Score: " + Integer.toString(getHighest());
     }
 
-    public void write() throws IOException {
-        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE)) {
-            writer.write(Integer.toString(highest));
-            writer.write('\n');
+    private void read() throws IOException {
+        //TODO update top10
+        if (Files.isReadable(path)) {
+            try (var scan = new Scanner(path)) {
+                if (scan.hasNextInt()) {
+                    highest = scan.nextInt();
+                    return;
+                }
+            }
         }
     }
 
-    public int read() throws IOException {
-        if (!Files.isReadable(path)) {
-            return 0;
-        }
-        try (var scan = new Scanner(path)) {
-            return scan.nextInt();
+    private void savePlayerInTop10() {
+        if(top10.addNecessary(latest)) {
+            String name = JOptionPane.showInputDialog("What is your name?");
+            // invisible? BUG
+            Player player = new Player(name, latest);
+            top10.add(player);
+            System.out.println(player); // temporary solution
         }
     }
-    
-    public void savePlayerInTop10() {
-        if(latest > highest) {
-            String name = JOptionPane.showInputDialog("What is your name?");
-            //invisible? BUG
-            
-            player = new Player(name, latest);
-            top10.add(player);
-        }  
+
+    void write() throws IOException {
+        if (Files.isWritable(path)) {
+            try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE)) {
+                writer.write(Integer.toString(highest));
+                writer.write('\n');
+            }
+        }
     }
 }
