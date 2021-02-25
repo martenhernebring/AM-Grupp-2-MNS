@@ -119,10 +119,9 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.setColor(Color.red);
         graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
 
-        savePlayerInTop10();
-        
         score.updateHighest();
         score.write();
+        savePlayerInTop10();
 
         //show high scores
         graphics.setColor(Color.black);
@@ -136,16 +135,20 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     }
     
-    private void savePlayerInTop10() {
-    	
-        String name;
-        
+    private void savePlayerInTop10() {	
+        String name; 
         if(score.getLatest() > score.getHighest()) {
             name = JOptionPane.showInputDialog("What is your name?");
+            //invisible?
+            
             player = new Player(name, score.getLatest());
             top10.add(player);
-        }
-        
+        }  
+      //Det som händer i top10. Bara för Demo, bör tas bort.
+        for(int i = 0; i<top10.getPlayers().size(); i++) {
+        	System.out.println(String.valueOf(i+1) + ". "+ top10.getPlayers().get(i));
+        	}
+        System.out.println("*******************");
     }
     @Override
     public void actionPerformed(ActionEvent e) {
