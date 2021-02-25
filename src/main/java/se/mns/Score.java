@@ -73,7 +73,7 @@ public class Score {
         top10 = new Top10();
         if (Files.isReadable(path)) {
             try (var scan = new Scanner(path)) {
-                if(scan.hasNextLine()) {
+                while(scan.hasNextLine()) {
                     String line = scan.nextLine();
                     String[] words = line.split(", score: ");
                     Player old = new Player(words[0], Integer.parseInt(words[1]));
