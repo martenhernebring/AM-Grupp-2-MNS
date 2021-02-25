@@ -1,5 +1,15 @@
-# Space invaders demo project
+# Flappy Birb game demo project by Group2
 
-This is a very basic space invaders demo for use in one of my classes to show some basic Swing/AWT code.
+This is a very basic game demo for use by Hampus Ram
 
-This is not a good example of how to make a game, it is just there to give some hints as to what one could do to create a very basic game.
+# To download the game, use the following link:
+https://github.com/martenhernebring/AM-Grupp-2-MNS.git
+
+# To run the game:
+java -jar target/flappybirb-0.0.1-SNAPSHOT.jar 
+
+# Start playing the game with the space key 
+
+# The game has two speed levels, use the S key if you what to level up.
+
+# At the end of the game .....
