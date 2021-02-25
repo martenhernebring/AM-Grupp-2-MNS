@@ -69,19 +69,35 @@ public class Score {
 
         if (Files.isReadable(path)) {
             try (var scan = new Scanner(path)) {
-                if (scan.hasNextInt()) {
+                /*if (scan.hasNextInt()) {
                     highest = scan.nextInt();
                     return;
+                }*/
+                if(scan.hasNextLine()) {
+                    String line = scan.nextLine();
+                    String[] words = line.split(", score: ");
+                    System.out.println(words[0]);
+                    System.out.println(words[1]);
                 }
             }
         }
     }
 
     private void savePlayerInTop10() {
+        Player player = null;
         if (top10.isNecessary(latest)) {
-            String name = JOptionPane.showInputDialog("What is your name?");
+            boolean done = false;
+            while(!done) {
+                String name = JOptionPane.showInputDialog("What is your name?");
 
-            Player player = new Player(name, latest);
+                try {
+                    player = new Player(name, latest);
+                    done = true;
+                } catch (IllegalArgumentException ex){
+                    System.err.println(ex.getMessage());
+                }
+            }
+            
             top10.add(player);
         }
     }

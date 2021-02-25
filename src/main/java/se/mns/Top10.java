@@ -43,4 +43,12 @@ public class Top10 {
         return players.size() - 1;
     }
     
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for(Player player : players) {
+            sb.append(player.toString());
+        }
+        return sb.toString();
+    }
+    
 }
