@@ -68,6 +68,7 @@ public class Score {
             while ((line = reader.readLine()) != null) {
                 System.out.println(line + " with index " + i);
                 i++;
+                //outputLines[index] = line;
             }
         }
         //return outputLines;
