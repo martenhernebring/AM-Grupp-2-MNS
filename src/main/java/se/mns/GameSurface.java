@@ -115,6 +115,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.setColor(Color.red);
         graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
 
+        score.savePlayerInTop10();
         score.updateHighest();
 
         //show high scores
@@ -129,7 +130,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.drawString(score.highestText(), x, yCenter + diff);
 
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         // this will trigger on the timer event

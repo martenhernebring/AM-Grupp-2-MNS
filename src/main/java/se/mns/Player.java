@@ -37,4 +37,11 @@ public class Player implements Comparable<Player> {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return name + ", score: " + score;
+	}
+	
+	
+
 }

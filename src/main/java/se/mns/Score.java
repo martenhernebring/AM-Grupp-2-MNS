@@ -7,19 +7,24 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class Score {
-
-    private int latest;
-    private int highest;
-    private Path path;
-
-    public Score() {
-        latest = 0;
-        highest = 0;
-        path = Path.of("highest_score.txt").toAbsolutePath().normalize();
-    }
-
-    public int getLatest() {
+	
+	private int latest;
+	private int highest;
+	private Path path;
+    private Top10 top10;
+    private Player player;
+	
+	public Score() {
+		latest = 0;
+		highest = 0;
+		path = Path.of("score.txt").toAbsolutePath().normalize();
+		top10 = new Top10();
+	}
+	
+	public int getLatest() {
         return latest;
     }
 
@@ -73,5 +78,20 @@ public class Score {
         try (var scan = new Scanner(path)) {
             return scan.nextInt();
         }
+    }
+    
+    public void savePlayerInTop10() {
+        if(latest > highest) {
+            String name = JOptionPane.showInputDialog("What is your name?");
+            //invisible?
+            
+            player = new Player(name, latest);
+            top10.add(player);
+        }  
+      /*Det som händer i top10. Bara för Demo, bör tas bort.
+        for(int i = 0; i<top10.getPlayers().size(); i++) {
+            System.out.println(String.valueOf(i+1) + ". "+ top10.getPlayers().get(i));
+            }
+        System.out.println("*******************");*/
     }
 }
