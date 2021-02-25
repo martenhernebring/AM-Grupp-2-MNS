@@ -119,15 +119,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.setColor(Color.red);
         graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
 
-        String name;
+        savePlayerInTop10();
         
-        if(score.getLatest() > score.getHighest()) {
-            name = JOptionPane.showInputDialog("What is your name?");
-            player = new Player(name, score.getLatest());
-            top10.add(player);
-        }
-        
-        //Save name TODO
         score.updateHighest();
         score.write();
 
@@ -142,7 +135,18 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.drawString(score.highestText(), x, yCenter + diff);
 
     }
-
+    
+    private void savePlayerInTop10() {
+    	
+        String name;
+        
+        if(score.getLatest() > score.getHighest()) {
+            name = JOptionPane.showInputDialog("What is your name?");
+            player = new Player(name, score.getLatest());
+            top10.add(player);
+        }
+        
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         // this will trigger on the timer event
