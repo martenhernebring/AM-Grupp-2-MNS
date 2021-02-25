@@ -15,6 +15,7 @@ public class Score {
     private int highest;
     private Path path;
     private Top10 top10;
+    private boolean done;
 
     public Score() {
         latest = 0;
@@ -41,12 +42,15 @@ public class Score {
         } catch (IOException ex) {
             // do nothing
         }
+        done = false;
         savePlayerInTop10();
         if (latest > highest) {
             highest = latest;
 
         }
-        write();
+        if(done) {
+            write();
+        }
     }
 
     public void increaseLatest() {
@@ -66,27 +70,22 @@ public class Score {
     }
 
     private void read() throws IOException {
-
+        top10 = new Top10();
         if (Files.isReadable(path)) {
             try (var scan = new Scanner(path)) {
-                /*if (scan.hasNextInt()) {
-                    highest = scan.nextInt();
-                    return;
-                }*/
                 if(scan.hasNextLine()) {
                     String line = scan.nextLine();
                     String[] words = line.split(", score: ");
-                    System.out.println(words[0]);
-                    System.out.println(words[1]);
+                    Player old = new Player(words[0], Integer.parseInt(words[1]));
+                    top10.add(old);
                 }
             }
         }
     }
 
     private void savePlayerInTop10() {
-        Player player = null;
         if (top10.isNecessary(latest)) {
-            boolean done = false;
+            Player player = null;
             while(!done) {
                 String name = JOptionPane.showInputDialog("What is your name?");
 
@@ -109,11 +108,6 @@ public class Score {
             for (Player player : players) {
                 writer.write(player.toString());
             }
-
-            /*
-             * writer.write(Integer.toString(highest)); writer.write("\n");
-             */
-
         }
     }
 }
