@@ -83,15 +83,10 @@ public class Score {
     public void savePlayerInTop10() {
         if(latest > highest) {
             String name = JOptionPane.showInputDialog("What is your name?");
-            //invisible?
+            //invisible? BUG
             
             player = new Player(name, latest);
             top10.add(player);
         }  
-      /*Det som händer i top10. Bara för Demo, bör tas bort.
-        for(int i = 0; i<top10.getPlayers().size(); i++) {
-            System.out.println(String.valueOf(i+1) + ". "+ top10.getPlayers().get(i));
-            }
-        System.out.println("*******************");*/
     }
 }
