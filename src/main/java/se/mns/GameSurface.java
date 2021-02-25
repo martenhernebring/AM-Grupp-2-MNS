@@ -94,7 +94,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 showMenu(graphics);
                 return;
             } else {
-                score.updateHighest();
+                score.save();
                 status.setSave(true);
                 this.repaint();
             }         

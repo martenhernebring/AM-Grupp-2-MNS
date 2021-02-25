@@ -42,5 +42,5 @@ public class Top10 {
     public int last() {
         return players.size() - 1;
     }
-
+    
 }
