@@ -1,10 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>se.mns</groupId>
-  <artifactId>jumpybirb</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>jumpybirb</name>
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>se.mns</groupId>
+	<artifactId>jumpybirb</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>jumpybirb</name>
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -21,6 +23,19 @@
 			<version>5.7.0</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.28</version>
+		</dependency>
+		<!-- Used for logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.28</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -42,7 +57,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.0</version>	
+				<version>3.2.0</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -59,9 +74,10 @@
 				<version>3.2.0</version>
 				<configuration>
 					<!-- C:\Program Files\Java\jdk-11.0.10\bin -->
-					<javadocExecutable>C:\\Program Files\\Java\\jdk-11.0.10\\bin\\javadoc</javadocExecutable>
+					<javadocExecutable>C:\\Program
+						Files\\Java\\jdk-11.0.10\\bin\\javadoc</javadocExecutable>
 				</configuration>
 			</plugin>
 		</plugins>
-  </build>
+	</build>
 </project>

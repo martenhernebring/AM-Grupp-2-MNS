@@ -27,7 +27,7 @@ public class Top10 {
         return Collections.unmodifiableList(players);
     }
 
-    public boolean addNecessary(int latest) {
+    public boolean isNecessary(int latest) {
         if (size() < 10) {
             return true;
         } else {

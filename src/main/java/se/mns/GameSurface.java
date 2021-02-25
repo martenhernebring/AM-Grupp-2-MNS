@@ -100,20 +100,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
             }         
         }
 
-        // fill the background
-        graphics.setColor(Color.cyan);
-        graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
-
-        // draw the obstacles
-        for (Rectangle obstacle : obstacles) {
-            graphics.setColor(Color.red);
-            graphics.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-        }
-
-        // draw the bird
-        graphics.setColor(Color.black);
-        cakeAngle = (cakeAngle + 1) % 46;
-        graphics.fillArc(bird.x, bird.y, bird.width, bird.height, cakeAngle, 360-cakeAngle *2);
+        showObstacles(graphics);
     }
 
     private void showMenu(Graphics graphics) throws IOException {
@@ -132,6 +119,23 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.drawString(score.latestText(), x, yCenter - diff);
         graphics.drawString(score.highestText(), x, yCenter + diff);
 
+    }
+    
+    private void showObstacles(Graphics graphics) {
+        // fill the background
+        graphics.setColor(Color.cyan);
+        graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
+
+        // draw the obstacles
+        for (Rectangle obstacle : obstacles) {
+            graphics.setColor(Color.red);
+            graphics.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+        }
+
+        // draw the bird
+        graphics.setColor(Color.black);
+        cakeAngle = (cakeAngle + 1) % 46;
+        graphics.fillArc(bird.x, bird.y, bird.width, bird.height, cakeAngle, 360-cakeAngle *2);    
     }
     
     @Override
