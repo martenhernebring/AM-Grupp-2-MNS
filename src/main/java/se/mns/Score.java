@@ -111,4 +111,8 @@ public class Score {
             }
         }
     }
+
+    public List<Player> getTop10() {
+        return top10.getPlayers();
+    }
 }

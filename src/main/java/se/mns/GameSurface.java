@@ -117,14 +117,18 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         final int yCenter = SIZE / 2 - 9;
         final int diff = 20;
         
-        graphics.drawString(score.latestText(), x, yCenter - diff);
-        graphics.drawString(score.highestText(), x, yCenter + diff);
-        graphics.drawString(score.latestText(), x, yCenter - 3*diff);
-        graphics.drawString(score.highestText(), x, yCenter + 3*diff);
-        graphics.drawString(score.latestText(), x, yCenter - 5*diff);
-        graphics.drawString(score.highestText(), x, yCenter + 5*diff);
-        graphics.drawString(score.latestText(), x, yCenter - 7*diff);
-        graphics.drawString(score.highestText(), x, yCenter + 7*diff);
+        List<Player> players = score.getTop10();
+
+        graphics.drawString(players.get(0).toString(), x, yCenter - diff);
+        graphics.drawString(players.get(1).toString(), x, yCenter + diff);
+        graphics.drawString(players.get(2).toString(), x, yCenter - 3*diff);
+        graphics.drawString(players.get(3).toString(), x, yCenter + 3*diff);
+        graphics.drawString(players.get(4).toString(), x, yCenter - 5*diff);
+        graphics.drawString(players.get(5).toString(), x, yCenter + 5*diff);
+        graphics.drawString(players.get(6).toString(), x, yCenter - 7*diff);
+        graphics.drawString(players.get(7).toString(), x, yCenter + 7*diff);
+        graphics.drawString(players.get(8).toString(), x, yCenter - 9*diff);
+        graphics.drawString(players.get(9).toString(), x, yCenter + 9*diff);
 
     }
     
