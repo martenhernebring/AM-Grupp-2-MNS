@@ -75,7 +75,7 @@ public class Score {
             try (var scan = new Scanner(path)) {
                 while(scan.hasNextLine()) {
                     String line = scan.nextLine();
-                    String[] words = line.split(", score: ");
+                    String[] words = line.split(", score: ", 2); //(, words.length)
                     Player old = new Player(words[0], Integer.parseInt(words[1]));
                     top10.add(old);
                 }
