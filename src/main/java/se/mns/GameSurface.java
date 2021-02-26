@@ -110,7 +110,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
         //show high scores
         graphics.setColor(Color.black);
-        graphics.setFont(new Font("Arial", Font.BOLD, 32));
+        graphics.setFont(new Font("Arial", Font.BOLD, 18));
         
         final int x = 20;
         final int yCenter = SIZE / 2;
