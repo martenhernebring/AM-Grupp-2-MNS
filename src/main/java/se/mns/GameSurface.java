@@ -29,6 +29,9 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
 
     static final int SIZE = 400;
     private static final int PADDING = 0;
+    private final int xHeight = 20;
+    private final int yCenter = SIZE / 2 - 10;
+    private final int diff = 18;
 
     private Status status;
 
@@ -94,6 +97,8 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 showMenu(graphics);
                 return;
             } else {
+                showRedBackground(graphics);
+                showScore(graphics);
                 score.save();
                 status.setSave(true);
                 this.repaint();
@@ -105,33 +110,38 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void showMenu(Graphics graphics) throws IOException {
-        // fill the background
-        graphics.setColor(Color.red);
-        graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
+        
+        showRedBackground(graphics);
 
         // show high scores
         graphics.setColor(Color.black);
         graphics.setFont(new Font("Arial", Font.BOLD, 18));
-
-        final int x = 20;
-        final int yCenter = SIZE / 2 - 10;
-        final int diff = 18;
 
         List<Player> players = score.getTop10();
         final int s = players.size();
         
         if (s > 0) {
             for (int i = 0; i < s; i++) {
-                graphics.drawString(players.get(i).toString(), x, yCenter + ((2 * i - 9) * diff));
+                graphics.drawString(players.get(i).toString(), xHeight, yCenter + ((2 * i - 9) * diff));
             }
         } else {
-            // show high scores
-            graphics.setColor(Color.black);
-            graphics.setFont(new Font("Arial", Font.BOLD, 32));
-            graphics.drawString(score.latestText(), x, yCenter - diff);
-            graphics.drawString(score.highestText(), x, yCenter + diff);
+            showScore(graphics);
         }
 
+    }
+    
+    private void showRedBackground(Graphics graphics) {
+     // fill the background
+        graphics.setColor(Color.red);
+        graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
+    }
+    
+    private void showScore(Graphics graphics) {
+     // show high scores
+        graphics.setColor(Color.black);
+        graphics.setFont(new Font("Arial", Font.BOLD, 32));
+        graphics.drawString(score.latestText(), xHeight, yCenter - diff);
+        graphics.drawString(score.highestText(), xHeight, yCenter + diff);
     }
 
     private void showObstacles(Graphics graphics) {
