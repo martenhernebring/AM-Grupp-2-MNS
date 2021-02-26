@@ -1,0 +1,148 @@
+e991a2d Limited split to 2-length arrays only
+0aa7dba Added missing while loop read loop
+cb9fa22 Added reading and writing method for whole top10
+fda2cfd Added split to read function
+445ce28 Fixed null on cancel bug
+265f617 Found bug
+36ea697 Added save file to .gitignore
+8d58d23 Fixed bug and prompt name only if necessary
+44ca1db Removed comment
+87e0d43 Moved top10 and player to Score class
+9ebfc1c Code review by Marten and Naoya
+b36272a Added sysout to visualize top10
+2a18fd0 Changed name to jumpybirb
+2de8c07 Save highest as an int in highestScore.txt. OBS! File is deleted every test
+6b4eba4 Extracted samePlayerInTop10() from showMenu()
+4151d06 Changed text in toString()
+13309e2 Fixed conflict due to different variable name
+429f4ce Fixed failed test and changed return to sysout for analysis
+3a9ad86 Deleted unnecessary sysout
+dbca316 Player name input and score saves in top 10
+bd279be Added toString()
+a435507 Added comment jtextfield
+0d40e80 Added JOptionsPane
+af438e6 Created simple pane
+af88f51 Changed speed to 3 and 5
+6f9a2d3 Made better names, extract functions, put variables, merge similar blocks
+d1eee9c Refactored name took away number
+bbf4062 Removed save class
+154da9a Fixed test score with right methods
+151fa61 Put save and score together and removed time class
+2ffff0b Merge branch 'master' of https://github.com/martenhernebring/AM-Grupp-2-MNS into master Created Top10 and Top10Test.
+27396be Added newline in saved file
+f77770d Added read method to be tested
+a9a7a6c Merge branch 'save'
+62eb8e8 Added test to write method
+800fdb3 Merge branch 'master' of https://github.com/martenhernebring/AM-Grupp-2-MNS into master Developed Top10 class and Top10Test
+8479de3 Added noSpaceAllowed and noNumbersAllowed in PlayerTest
+ac3aaf2 No space and no numbers are allowed for a name
+a00c7b5 Merge branch 'save'
+1dc08ee Added automatic save to score.txt file in same directory
+9c8dbfd Refactored Top10. Devided 1 method into 3.
+7d0b683 Created Top10Test
+d2eebf8 Created PlayerTest
+d807445 Removed unused import
+bcf1054 Created Player class and modified Top10 to sort ranking easier
+01d9419 Fixed bug when restarting timer
+8f28756 Solved conflicts in ScoreTest
+ec4b1cc Reverted to old
+97256fa Solved a conflict
+ffd2e70 Created Top10.java which handles score and name
+254cffb Merge branch 'save'
+8e80882 Added naoyas test class
+40cfe10 Updated ScoreTest so that it matches the lastet Score.java
+03aa10a Added removed method
+96c5d25 Fixed conflict in test score
+bc5fbc0 Removed unused variables
+c2ef467 Created save class for saving to text-file extending score
+9f6d48f Updated StatusTest
+b3389b0 Added speed up feature
+7f234b3 Fixed columns renew all the time
+1130be8 Fixed random function
+7f1897b Got good sizes
+b5d32d4 Removed comments
+8fe9aac Added angle vector
+0c38539 added a change into the graphics and the color
+735710a Created tests for status.java
+4ae81d4 Added keyRealeased in status and removed unused methods
+352d542 Removed unused setters from Status
+07abb50 Added Time utility class
+f4793d9 Changed testscore
+5d53f01 Added methods to status.java
+2a86255 Cleaned code in GameSurface
+7919dcc Refactoring in Gamesurface
+5cc4a3f Created Class Status to check booleans in Gamesurface
+80c275a Added setEasyDifficulty()
+111a6e6 Merge branch 'marten' of https://github.com/martenhernebring/AM-Grupp-2-MNS into refactoring Refactoring branch
+ae43d45 Merge branch 'master' into marten
+10b2405 Added top10 TreeMap
+88956d6 Added game over if spaceship is too low
+669cf16 Added comments for refactoring
+84a500e Fixed bug with s-tangent
+e16e001 Added 0.25 s delay after showing menu
+afb90f0 Removed 10 times score for easy
+2607ac7 Added toggle to speed
+1d742a8 Added a speedUp key press
+db6a9c7 Added size to difficulty
+aed1a93 changed alien sizes
+06dcffd Removed Bird file and variable from GameSurface
+47e0568 Added easyMode with D button that give 10 times more points
+809bac9 Solved conflicts in GameSurface
+492dd69 Solved conflicts in GameSurface
+d218103 Changed speed for spaceship and aliens
+8bcd8c8 Fixed conflict due to bug in Graphics
+f31c697 Fixed bug dropping bird after restart
+bed2b69 Fixed restarting bug
+a26ae86 Merge branch 'naoya' Removed unused class and renamed test
+86969fd Removed unused class and renamed test class to score
+214a15d Delete Grafic.java
+a63377a Merge branch 'master' of https://github.com/martenhernebring/AM-Grupp-2-MNS into master Changed GameSurface so that game finishes when spaceship raches the top or the bottom
+7e10f69 Changed GameSurface so that game finishes when spaceship reaches the top or the bottom
+81ed124 Added a bashfile and changed to Bird.java
+ca2c4a3 Added mac file to git ignore
+0227677 Merge branch 'master' into suzana Added highscore
+5b12030 Changed the score grafics
+a9aa1fb Added highScore and resolved conflict
+e917376 Refactoring for Score
+0f4298b Created a new class Grafic.java
+4523394 Created Bird extending Rectangle
+fdbb83d Fixed Bird
+1ab4e8a Created a Bird class from Rectangle
+c04a48e Merge branch 'naoya' into master Added test files for Point class
+bf4e53e Created test file and folder for Point class
+9370119 Merge branch 'master' of https://github.com/martenhernebring/AM-Grupp-2-MNS into master Added setHighestPoints()
+2eceebb Merge branch 'naoya' into master Added getHighestPoints()
+b828f20 Added getHighestPoints()
+c68e42d Added restart using space and reset hiscore
+c7e04f0 Merge branch 'master' of https://github.com/martenhernebring/AM-Grupp-2-MNS
+0fe5d5c Merge branch 'naoya' into master Added resetPoints()
+84f3110 Added resetPoints()
+56711e2 Added highscore
+e5f709b Merge branch 'master' of https://github.com/martenhernebring/AM-Grupp-2-MNS into master
+e66068c Created Point class which calculates even highest point
+0ac9fcd Both jumping feature and game over works
+cc622ec Fixed bug with game over
+60818c1 Changed color to yellow and centralized text
+045a07f Added hiscore label based on Nayoas code
+6130e94 Added maven to .gitignore
+49e962c Merge branch 'naoya' into master Created package and a restart button.
+393bfbb Added package and changed size
+4145b03 Created a quit button in Restart
+dca191e Merge branch 'master' of https://github.com/martenhernebring/AM-Grupp-2-MNS into master Starting new sprint cleaning unmerged branches
+5956577 Solved conflict in .gitignore
+af3ed73 Added mac file and test file to .gitignore
+5c57161 Created a GUI which says "Welcome to Jumpy Birb"
+519e584 Test in Jenkins done
+a8d7da6 Merge branch 'marten' Just for testing Jenkins email service
+f7747d2 Test commit
+c609e60 Edited .gitignore comment
+7714c7f added macfiles to git ignore
+50a3661 Changed name to Flappybirb
+92b2535 Changed artifact id
+c4b20c7 Fixed bug in pom.xml
+677021a Added maven to repo
+52e21cf Added jumping feature
+03ac7f5 Added space for moving up
+34e239d added license
+b60f727 Added a simple readme.
+567e635 Initial commit
