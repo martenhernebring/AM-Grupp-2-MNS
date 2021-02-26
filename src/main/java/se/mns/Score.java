@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -113,6 +114,12 @@ public class Score {
     }
 
     public List<Player> getTop10() {
-        return top10.getPlayers();
+        List<Player> p;
+        try {
+            p = Collections.unmodifiableList(top10.getPlayers());
+        } catch (IndexOutOfBoundsException ex) {
+            p = null;
+        }
+        return p;
     }
 }

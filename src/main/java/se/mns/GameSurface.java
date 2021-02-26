@@ -24,7 +24,7 @@ import javax.swing.Timer;
  * 
  */
 public class GameSurface extends JPanel implements ActionListener, KeyListener {
-    //Required by compiler
+    // Required by compiler
     private static final long serialVersionUID = 6260582674762246325L;
 
     static final int SIZE = 400;
@@ -65,10 +65,10 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         final int gap = 70;
         final int yUpper = 0, yLower = randomCavity + gap;
         final int heightUpper = randomCavity, heightLower = SIZE - randomCavity - gap;
-        obstacles.add(new Rectangle(SIZE-width, yUpper, width, heightUpper));
-        obstacles.add(new Rectangle(SIZE-width, yLower, width, heightLower));
+        obstacles.add(new Rectangle(SIZE - width, yUpper, width, heightUpper));
+        obstacles.add(new Rectangle(SIZE - width, yLower, width, heightLower));
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -85,12 +85,12 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
      * surface.
      * 
      * @param graphics the graphics to paint on
-     * @throws IOException 
+     * @throws IOException
      */
     private void repaint(Graphics graphics) throws IOException {
 
         if (status.isGameOver()) {
-            if(status.isSaved()) {
+            if (status.isSaved()) {
                 showMenu(graphics);
                 return;
             } else {
@@ -98,7 +98,7 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
                 status.setSave(true);
                 this.repaint();
                 return;
-            }         
+            }
         }
 
         showObstacles(graphics);
@@ -109,29 +109,46 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.setColor(Color.red);
         graphics.fillRect(PADDING, PADDING, SIZE, SIZE);
 
-        //show high scores
+        // show high scores
         graphics.setColor(Color.black);
         graphics.setFont(new Font("Arial", Font.BOLD, 18));
-        
+
         final int x = 20;
-        final int yCenter = SIZE / 2 - 9;
-        final int diff = 20;
-        
+        final int yCenter = SIZE / 2 - 4;
+        final int diff = 18;
+
         List<Player> players = score.getTop10();
 
-        graphics.drawString(players.get(0).toString(), x, yCenter - diff);
-        graphics.drawString(players.get(1).toString(), x, yCenter + diff);
-        graphics.drawString(players.get(2).toString(), x, yCenter - 3*diff);
-        graphics.drawString(players.get(3).toString(), x, yCenter + 3*diff);
-        graphics.drawString(players.get(4).toString(), x, yCenter - 5*diff);
-        graphics.drawString(players.get(5).toString(), x, yCenter + 5*diff);
-        graphics.drawString(players.get(6).toString(), x, yCenter - 7*diff);
-        graphics.drawString(players.get(7).toString(), x, yCenter + 7*diff);
-        graphics.drawString(players.get(8).toString(), x, yCenter - 9*diff);
-        graphics.drawString(players.get(9).toString(), x, yCenter + 9*diff);
+        if (players.size() > 0) {
+            for (int i = 0; i < players.size(); i++) {
+                graphics.drawString(players.get(i).toString(), x, yCenter - (9 + 2 * i) * diff);
+            }
+            /*
+             * graphics.drawString(players.get(0).toString(), x, yCenter - diff);
+             * graphics.drawString(players.get(1).toString(), x, yCenter + diff);
+             * graphics.drawString(players.get(2).toString(), x, yCenter - 3*diff);
+             * graphics.drawString(players.get(3).toString(), x, yCenter + 3*diff);
+             * graphics.drawString(players.get(4).toString(), x, yCenter - 5*diff);
+             * graphics.drawString(players.get(5).toString(), x, yCenter + 5*diff);
+             * graphics.drawString(players.get(6).toString(), x, yCenter - 7*diff);
+             * graphics.drawString(players.get(7).toString(), x, yCenter + 7*diff);
+             * graphics.drawString(players.get(8).toString(), x, yCenter - 9*diff);
+             * graphics.drawString(players.get(9).toString(), x, yCenter + 9*diff);
+             */
+        } else {
+            // show high scores
+            graphics.setColor(Color.black);
+            graphics.setFont(new Font("Arial", Font.BOLD, 32));
+//            
+//            final int x = 20;
+//            final int yCenter = SIZE / 2;
+//            final int diff = 24;
+            graphics.drawString(score.latestText(), x, yCenter - diff);
+            graphics.drawString(score.highestText(), x, yCenter + diff);
+        }
 
     }
-    
+
     private void showObstacles(Graphics graphics) {
         // fill the background
         graphics.setColor(Color.cyan);
@@ -146,9 +163,9 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         // draw the bird
         graphics.setColor(Color.black);
         cakeAngle = (cakeAngle + 1) % 46;
-        graphics.fillArc(bird.x, bird.y, bird.width, bird.height, cakeAngle, 360-cakeAngle *2);    
+        graphics.fillArc(bird.x, bird.y, bird.width, bird.height, cakeAngle, 360 - cakeAngle * 2);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         // this will trigger on the timer event
@@ -174,13 +191,13 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
     }
 
     private void moveObstacles() {
-        
+
         final int fastSpeed = 5, normalSpeed = 3;
         int xSpeed = status.isSpeedUp() ? fastSpeed : normalSpeed;
-        
+
         moveObstacle(obstacles.get(0), xSpeed);
         moveObstacle(obstacles.get(1), xSpeed);
-        
+
         if (obstacles.get(0).x + obstacles.get(0).width < 0) {
             // we add to another list and remove later
             // to avoid concurrent modification in a for-each loop
@@ -190,11 +207,11 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         }
 
     }
-    
+
     private void moveObstacle(Rectangle obstacle, int speed) {
-        
+
         obstacle.translate(-speed, 0);
-        
+
         if (obstacle.intersects(bird)) {
             status.setGameOver(true);
         }
