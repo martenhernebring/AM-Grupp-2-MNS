@@ -26,7 +26,7 @@ public class Top10 {
     List<Player> getPlayers() {
         List<Player> p;
         try {
-            p = Collections.unmodifiableList(players);
+            p = players;
         } catch (IndexOutOfBoundsException ex) {
             p = null;
         }
@@ -34,10 +34,10 @@ public class Top10 {
     }
 
     public boolean isNecessary(int latest) {
-        if (size() < 10) {
-            return true;
-        } else if(latest == 0) {
+        if(latest == 0) {
             return false;
+        } else if (size() < 10) {
+            return true;
         } else {
             if(latest > players.get(last()).getScore()) {
                 return true;

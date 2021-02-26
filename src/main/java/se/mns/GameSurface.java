@@ -114,35 +114,20 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.setFont(new Font("Arial", Font.BOLD, 18));
 
         final int x = 20;
-        final int yCenter = SIZE / 2 - 4;
+        final int yCenter = SIZE / 2 - 10;
         final int diff = 18;
 
         List<Player> players = score.getTop10();
-
-        if (players.size() > 0) {
-            for (int i = 0; i < players.size(); i++) {
-                graphics.drawString(players.get(i).toString(), x, yCenter - (9 + 2 * i) * diff);
+        final int s = players.size();
+        
+        if (s > 0) {
+            for (int i = 0; i < s; i++) {
+                graphics.drawString(players.get(i).toString(), x, yCenter + ((2 * i - 9) * diff));
             }
-            /*
-             * graphics.drawString(players.get(0).toString(), x, yCenter - diff);
-             * graphics.drawString(players.get(1).toString(), x, yCenter + diff);
-             * graphics.drawString(players.get(2).toString(), x, yCenter - 3*diff);
-             * graphics.drawString(players.get(3).toString(), x, yCenter + 3*diff);
-             * graphics.drawString(players.get(4).toString(), x, yCenter - 5*diff);
-             * graphics.drawString(players.get(5).toString(), x, yCenter + 5*diff);
-             * graphics.drawString(players.get(6).toString(), x, yCenter - 7*diff);
-             * graphics.drawString(players.get(7).toString(), x, yCenter + 7*diff);
-             * graphics.drawString(players.get(8).toString(), x, yCenter - 9*diff);
-             * graphics.drawString(players.get(9).toString(), x, yCenter + 9*diff);
-             */
         } else {
             // show high scores
             graphics.setColor(Color.black);
             graphics.setFont(new Font("Arial", Font.BOLD, 32));
-//            
-//            final int x = 20;
-//            final int yCenter = SIZE / 2;
-//            final int diff = 24;
             graphics.drawString(score.latestText(), x, yCenter - diff);
             graphics.drawString(score.highestText(), x, yCenter + diff);
         }

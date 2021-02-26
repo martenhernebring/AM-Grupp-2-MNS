@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -44,7 +43,6 @@ public class Score {
             // do nothing
         }
         done = false;
-        System.out.println("Thank you.");
         savePlayerInTop10();
         if (latest > highest) {
             highest = latest;
@@ -116,7 +114,7 @@ public class Score {
     public List<Player> getTop10() {
         List<Player> p;
         try {
-            p = Collections.unmodifiableList(top10.getPlayers());
+            p = top10.getPlayers();
         } catch (IndexOutOfBoundsException ex) {
             p = null;
         }
