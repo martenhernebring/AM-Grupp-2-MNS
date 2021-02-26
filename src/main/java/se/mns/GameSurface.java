@@ -114,11 +114,17 @@ public class GameSurface extends JPanel implements ActionListener, KeyListener {
         graphics.setFont(new Font("Arial", Font.BOLD, 18));
         
         final int x = 20;
-        final int yCenter = SIZE / 2;
-        final int diff = 24;
+        final int yCenter = SIZE / 2 - 9;
+        final int diff = 20;
         
         graphics.drawString(score.latestText(), x, yCenter - diff);
         graphics.drawString(score.highestText(), x, yCenter + diff);
+        graphics.drawString(score.latestText(), x, yCenter - 3*diff);
+        graphics.drawString(score.highestText(), x, yCenter + 3*diff);
+        graphics.drawString(score.latestText(), x, yCenter - 5*diff);
+        graphics.drawString(score.highestText(), x, yCenter + 5*diff);
+        graphics.drawString(score.latestText(), x, yCenter - 7*diff);
+        graphics.drawString(score.highestText(), x, yCenter + 7*diff);
 
     }
     

@@ -28,7 +28,10 @@ public class Top10 {
     }
 
     public boolean isNecessary(int latest) {
-        if (size() < 10) {
+        if(latest == 0) {
+            return false;
+        }
+        else if (size() < 10) {
             return true;
         } else {
             if(latest > players.get(last()).getScore()) {

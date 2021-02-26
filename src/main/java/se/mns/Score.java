@@ -43,6 +43,7 @@ public class Score {
             // do nothing
         }
         done = false;
+        System.out.println("Thank you.");
         savePlayerInTop10();
         if (latest > highest) {
             highest = latest;
