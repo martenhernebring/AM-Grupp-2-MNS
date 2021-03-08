@@ -1,0 +1,10 @@
+Ja, score: 3
+Jo, score: 2
+Lo, score: 1
+Aja, score: 1
+Maja, score: 1
+Ronald, score: 4
+Bosse, score: 2
+Nisse, score: 3
+Lena, score: 4
+Ida, score: 4
