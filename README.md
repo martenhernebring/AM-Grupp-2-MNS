@@ -1,5 +1,12 @@
-# Space invaders demo project
+# This i is a simple game orderd by Hampus Ram called Jumpy Birb
 
-This is a very basic space invaders demo for use in one of my classes to show some basic Swing/AWT code.
+# https://github.com/martenhernebring/AM-Grupp-2-MNS.git
 
-This is not a good example of how to make a game, it is just there to give some hints as to what one could do to create a very basic game.
+# How to start the game:
+1. mvn clean package
+2. java -jar target/jumpybirb-0.0.1-SNAPSHOT.jar  
+3. Start the game by pressing the space key
+4. Press the S key to change the speed levels there are two level
+
+
+
