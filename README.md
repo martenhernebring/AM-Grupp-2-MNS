@@ -5,7 +5,7 @@ A game where the player is represented as a bird and has to get points by avoidi
 
 #### Description of the program
 In this game the goal is to collect as points as possible by avoiding obstacles.
-Only the top 10 scores will be saved in a file called highscores.txt.
+Only the top 10 scores will be saved in a file called highest_score.txt.
 
 ### Clone and play the game
 
